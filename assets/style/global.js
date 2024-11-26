@@ -2,8 +2,7 @@ import { StyleSheet } from "react-native";
 
 export default global = StyleSheet.create({
     container: {
-        paddingVertical: 16,
-        paddingHorizontal: 16,
+        padding: 16,
         flex: 1,
         backgroundColor: '#fff',
     },
