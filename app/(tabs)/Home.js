@@ -33,7 +33,7 @@ export default function Home(){
     return (
         <View style={global.container}>
             <View style={styles.searchContainer}>
-                <TextInput style={styles.search} placeholder="Search Product"/>
+                <TextInput inputMode="search" style={styles.search} placeholder="Search Product"/>
                 <TouchableOpacity style={styles.searchBtn} title="Search" >
                     <Image source={require('../../assets/img/Search.png')} />
                 </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import global from '../../assets/style/global'
+import global from '../assets/style/global'
 
 export default function App() {
   function logar() {
@@ -9,17 +9,17 @@ export default function App() {
   return (
     <View style={global.container}>
       <View style={styles.header}>
-        <Image style={styles.logo} source={require('../../assets/img/logo.png')} />
+        <Image style={styles.logo} source={require('../assets/img/logo.png')} />
         <Text style={styles.title}>LOGIN</Text>
       </View>
       <View style={styles.content}>
         <View style={styles.input} >
           <Text style={styles.txt} >User</Text>
-          <TextInput style={global.inputfield}></TextInput>
+          <TextInput inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.txt}>Password</Text>
-          <TextInput style={global.inputfield} ></TextInput>
+          <TextInput secureTextEntry style={global.inputfield} ></TextInput>
         </View>
         <TouchableOpacity onPress={logar} style={global.primarytouch}>
           <Text style={global.touchtxt}>Log In</Text>
