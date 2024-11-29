@@ -1,6 +1,7 @@
 import { Animated, FlatList, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
 import { useState } from "react";
+import { Picker } from "@react-native-picker/picker";
 
 const categories = [
     { id: 1, name: "Fruits"},
@@ -8,102 +9,75 @@ const categories = [
     { id: 3, name: "Accessories"},
 ]
 
+const locals = [
+    { id: 1, name: "IG"},
+    { id: 2, name: "Arasuper"},
+    { id: 3, name: "Meta 21"},
+]
+
 export default function AddProduct () {
-    const [expandedSection, setExpandedSection] = useState(null); // Track expanded section
-  const [selectedItems, setSelectedItems] = useState([]); // Track selected items
-  const [animation] = useState(new Animated.Value(0)); // Animation value for collapsing/expanding sections
+    const [selectedCategory, setSelectedCategory] = useState()
 
-  const toggleSection = (id) => {
-    const toValue = expandedSection === id ? 0 : 1; // If the section is already expanded, collapse it
-    setExpandedSection(toValue === 1 ? id : null); // Set expanded section ID
-    Animated.timing(animation, {
-      toValue,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const handleItemSelect = (item) => {
-    setSelectedItems((prevSelectedItems) =>
-      prevSelectedItems.includes(item)
-        ? prevSelectedItems.filter((selectedItem) => selectedItem !== item) // Deselect if already selected
-        : [...prevSelectedItems, item] // Add item to selected list
+    const [height, setHeight] = useState(0);
+    const onContentSizeChange = event =>
+            setHeight(Math.max(35, event.nativeEvent.contentSize.height)
     );
-  };
-
-  const renderItem = ({ item }) => {
-    const heightAnimation = animation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [0, 150], // Control the expanded height
-    });
-
-    return (
-      <View style={styles.section}>
-        <TouchableOpacity onPress={() => toggleSection(item.id)} style={styles.header}>
-          <Text style={styles.headerText}>{item.title}</Text>
-        </TouchableOpacity>
-
-        <Animated.View style={[styles.content, { height: heightAnimation }]}>
-          {item.items.map((subItem) => (
-            <TouchableOpacity
-              key={subItem}
-              onPress={() => handleItemSelect(subItem)}
-              style={[
-                styles.item,
-                selectedItems.includes(subItem) ? styles.selectedItem : {},
-              ]}
-            >
-              <Text style={styles.itemText}>{subItem}</Text>
-            </TouchableOpacity>
-          ))}
-        </Animated.View>
-      </View>
-    );
-  };
-
+    
     return (
         <View style={global.container}>
             <View style={styles.input} >
-                <Text style={styles.txt} >Local *</Text>
-                <TextInput style={styles.inputfield}/>
-            </View>
-            <View style={styles.input} >
-                <Text style={styles.txt} >Name *</Text>
-                <TextInput style={styles.inputfield}/>
-            </View>
-            <View style={styles.input} >
-                <Text style={styles.txt} >Price *</Text>
-                <TextInput style={styles.inputfield}/>
-            </View>
-            <View style={styles.input} >
-                <Text style={styles.txt} >Category *</Text>
-                
-                <FlatList
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                />
-                {/* Show selected items */}
-                <View style={styles.selectedContainer}>
-                    <Text style={styles.selectedText}>Selected Items:</Text>
-                    {selectedItems.length > 0 ? (
-                    selectedItems.map((item, index) => (
-                        <Text key={index} style={styles.selectedItemText}>
-                        {item}
-                        </Text>
-                    ))
-                    ) : (
-                    <Text>No items selected</Text>
-                    )}
+                <Text style={styles.txt} >Local (Select one) *</Text>
+                <View
+                    style={styles.picker}
+                >
+                    <Picker 
+                        prompt="Select one..."
+                        mode="dropdown"
+                        selectedValue={selectedCategory}
+                        onValueChange={(itemvalue, itemIndex) => 
+                            setSelectedCategory(itemvalue)
+                        }
+                    >
+                        {locals.map((item) => {
+                            return <Picker.Item label={item.name} value={item.name}/>
+                        })}
+                    </Picker>
                 </View>
             </View>
             <View style={styles.input} >
+                <Text style={styles.txt} >Product name *</Text>
+                <TextInput placeholder="Enter the product name here..." inputMode="text" style={styles.inputfield}/>
+            </View>
+            <View style={styles.input} >
+                <Text style={styles.txt} >Price *</Text>
+                <TextInput placeholder="Enter the product price name here..." inputMode="decimal" style={styles.inputfield}/>
+            </View>
+            <View style={styles.input} >
+                <Text style={styles.txt} >Category (Select one) *</Text>
+                <View
+                    style={styles.picker}
+                >
+                    <Picker 
+                        prompt="Select one..."
+                        mode="dropdown"
+                        selectedValue={selectedCategory}
+                        onValueChange={(itemvalue, itemIndex) => 
+                            setSelectedCategory(itemvalue)
+                        }
+                    >
+                        {categories.map((item) => {
+                            return <Picker.Item label={item.name} value={item.name}/>
+                        })}
+                    </Picker>
+                </View>
+            </View>
+            <View style={styles.inputObs} >
                 <Text style={styles.txt} >Observation *</Text>
-                <TextInput multiline style={styles.inputobs}/>
+                <TextInput placeholder="Enter any useful observation..." multiline style={styles.inputobs} onContentSizeChange={onContentSizeChange}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Photos *</Text>
-                <TextInput style={styles.inputfield}/>
+                <TextInput placeholder="Espera-se uma foto" style={styles.inputfield} />
             </View>
         </View>
     )
@@ -111,6 +85,10 @@ export default function AddProduct () {
 
 const styles = StyleSheet.create({
     input: {
+        margin:4, 
+        gap: 8
+    },
+    inputObs: {
         margin:4, 
         gap: 8
     },
@@ -135,17 +113,22 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 5,
         overflow: 'hidden',
-      },
-      header: {
+    },
+    header: {
         padding: 10,
         backgroundColor: '#f1f1f1',
-      },
-      headerText: {
+    },
+    headerText: {
         fontSize: 18,
         fontWeight: 'bold',
-      },
-      content: {
+    },
+    content: {
         padding: 10,
         backgroundColor: '#fafafa',
-      },
+    },
+    picker: {
+        borderWidth: 1.32,
+        borderColor: '#d1d5db',
+        borderRadius: 8,
+    }
 })

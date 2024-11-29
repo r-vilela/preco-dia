@@ -1,11 +1,10 @@
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image, StyleSheet, Text, View } from "react-native"
 
-export default function Item(prod) {
-    console.log(prod)
-    
+export default function Item({prod}) {
 
     return (
-        <View style={styles.itemContainer}>
+        <View key={prod.id} style={styles.itemContainer}>
             <View style={styles.itemImageContainer}>
                 <Image style={styles.itemImage} source={require('../../assets/img/abaca.png')} />
             </View>
@@ -13,10 +12,12 @@ export default function Item(prod) {
                 <View style={{gap: 10}}>
                     <Text style={{fontSize: 24, fontWeight: 'bold'}}>{prod.name}</Text>
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
-                        <Image source={require('../../assets/img/map-pin.png')} /><Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.local}</Text>
+                        <FontAwesome size={20} name='map-marker' />
+                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.local}</Text>
                     </View >
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
-                        <Image source={require('../../assets/img/perfil.png')} /><Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.author}</Text>
+                        <FontAwesome size={20} name='user-o' />
+                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.author}</Text>
                     </View>
                 </View>
                 <View style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}>

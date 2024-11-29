@@ -2,26 +2,37 @@ import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "reac
 import global from "../../assets/style/global";
 import Item from "../../components/Home/Item";
 
+
+const item = {
+    name: 'Abacate Paulista',
+    local: 'Mercale - Avenida Ceara',
+    author: 'Alan123',
+    price: 8.99,
+}
 const dados = [
     {
+        id: 1,
         name: 'Abacate Paulista',
         local: 'Mercale - Avenida Ceara',
         author: 'Alan123',
         price: 8.99,
     },
     {
+        id: 2,
         name: 'Abacaxi Verde',
         local: 'IG - Avenida Calama',
         author: 'Raul29',
         price: 11.99,
     },
     {
+        id: 3,
         name: 'Manga Verde',
         local: 'Meta 21 - Abuna',
         author: 'Bianca75',
         price: 7.99,
     },
     {
+        id: 4,
         name: 'Morango Grande Verde',
         local: 'Feira da Quarta Feira',
         author: 'Joana77',
@@ -39,9 +50,9 @@ export default function Home(){
                 </TouchableOpacity>
             </View>
             <View style={ styles.itemContainer}>
+                <Item prod={item} />
 
                 {dados.map((item) => {
-                    {console.log(item)}
                     <Item prod={item} />
                 })}
 
