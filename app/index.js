@@ -15,11 +15,11 @@ export default function App() {
       <View style={styles.content}>
         <View style={styles.input} >
           <Text style={styles.txt} >User</Text>
-          <TextInput inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
+          <TextInput placeholder='Enter your email...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.txt}>Password</Text>
-          <TextInput secureTextEntry style={global.inputfield} ></TextInput>
+          <TextInput placeholder='Enter your password...' secureTextEntry style={global.inputfield} ></TextInput>
         </View>
         <TouchableOpacity onPress={logar} style={global.primarytouch}>
           <Text style={global.touchtxt}>Log In</Text>

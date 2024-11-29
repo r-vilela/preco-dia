@@ -50,7 +50,7 @@ export default function Home(){
                 </TouchableOpacity>
             </View>
             <View style={ styles.itemContainer}>
-                <Item prod={item} />
+                {/* <Item prod={item} /> */}
 
                 {dados.map((item) => {
                     <Item prod={item} />

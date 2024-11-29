@@ -18,6 +18,10 @@ const locals = [
 export default function AddProduct () {
     const [selectedCategory, setSelectedCategory] = useState()
 
+    function addCategory() {
+        ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+    }
+
     const [height, setHeight] = useState(0);
     const onContentSizeChange = event =>
             setHeight(Math.max(35, event.nativeEvent.contentSize.height)
@@ -39,7 +43,7 @@ export default function AddProduct () {
                         }
                     >
                         {locals.map((item) => {
-                            return <Picker.Item label={item.name} value={item.name}/>
+                            return <Picker.Item key={item.id} label={item.name} value={item.name}/>
                         })}
                     </Picker>
                 </View>
@@ -79,6 +83,9 @@ export default function AddProduct () {
                 <Text style={styles.txt} >Photos *</Text>
                 <TextInput placeholder="Espera-se uma foto" style={styles.inputfield} />
             </View>
+            <TouchableOpacity onPress={addCategory} style={{...global.primarytouch, marginTop: 15}}>
+                <Text style={global.touchtxt}>Add Product</Text>
+            </TouchableOpacity>
         </View>
     )
 }
