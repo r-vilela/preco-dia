@@ -1,4 +1,4 @@
-import { Animated, FlatList, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {  StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -18,7 +18,7 @@ const locals = [
 export default function AddProduct () {
     const [selectedCategory, setSelectedCategory] = useState()
 
-    function addCategory() {
+    function addProduct() {
         ToastAndroid.show('Product added!', ToastAndroid.SHORT);
     }
 
@@ -70,7 +70,7 @@ export default function AddProduct () {
                         }
                     >
                         {categories.map((item) => {
-                            return <Picker.Item label={item.name} value={item.name}/>
+                            return <Picker.Item key={item.id} label={item.name} value={item.name}/>
                         })}
                     </Picker>
                 </View>
@@ -83,7 +83,7 @@ export default function AddProduct () {
                 <Text style={styles.txt} >Photos *</Text>
                 <TextInput placeholder="Espera-se uma foto" style={styles.inputfield} />
             </View>
-            <TouchableOpacity onPress={addCategory} style={{...global.primarytouch, marginTop: 15}}>
+            <TouchableOpacity onPress={addProduct} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Product</Text>
             </TouchableOpacity>
         </View>

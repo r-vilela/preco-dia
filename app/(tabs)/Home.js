@@ -58,9 +58,6 @@ export default function Home(){
 
             </View>
 
-            <View>
-                <Text>navbar</Text>
-            </View>
         </View>
     )
 }

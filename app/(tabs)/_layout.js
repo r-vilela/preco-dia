@@ -1,12 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from "expo-router";
-import { Text } from 'react-native';
 
 export default function TabLayout () {
    const headerOpt = {
     headerTitleStyle: {
         fontWeight: 'bold',
         fontSize: 32,
+        color: '#374151'
     },
     headerTitleAlign: 'center',
    }
@@ -34,6 +34,22 @@ export default function TabLayout () {
                     ...headerOpt,
                     title: 'Add a Category',
                     tabBarIcon: ({ color }) => <FontAwesome size={28} name='list' color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name ="AddLocal"
+                options={{
+                    ...headerOpt,
+                    title: 'Add a Local',
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name='map-marker' color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name ="Perfil"
+                options={{
+                    ...headerOpt,
+                    title: 'Perfil',
+                    tabBarIcon: ({ color }) => <FontAwesome size={28} name='user' color={color} />,
                 }}
             />
         </Tabs>
