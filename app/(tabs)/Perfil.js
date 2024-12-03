@@ -1,8 +1,13 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global"
+import { router } from 'expo-router';
 
 export default function Perfil() {
+    function editPerfil() {
+        router.navigate('EditPerfil')
+    }
+
     return (
         <View style={{...global.container, paddingTop: 280}}>
             <View style={{
@@ -21,7 +26,7 @@ export default function Perfil() {
                 <Text style={{fontSize: 32, color: '#fff'}}>Lizza</Text>
             </View>
             <View style={styles.optContainer}>
-                <TouchableOpacity style={styles.opt}>
+                <TouchableOpacity onPress={editPerfil} style={styles.opt}>
                     <FontAwesome size={60} name='user-o' color={'#374151'} />
                     <View style={styles.textContainer}>
                         <Text style={styles.title}>Edit Profile</Text>
