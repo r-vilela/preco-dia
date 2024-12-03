@@ -2,6 +2,7 @@ import {  StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-nati
 import global from "../../assets/style/global";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
+import { router } from "expo-router";
 
 const categories = [
     { id: 1, name: "Fruits"},
@@ -26,6 +27,11 @@ export default function AddProduct () {
     const onContentSizeChange = event =>
             setHeight(Math.max(35, event.nativeEvent.contentSize.height)
     );
+
+    const AddPhoto = () => {
+        router.navigate('Camera')
+        console.log('camera')
+    }
     
     return (
         <View style={global.container}>
@@ -81,9 +87,13 @@ export default function AddProduct () {
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Photos *</Text>
-                <TextInput placeholder="Espera-se uma foto" style={styles.inputfield} />
+                <View style={styles.CamContainer}>
+                    <TouchableOpacity onPress={AddPhoto} style={styles.CamButton}>
+                        <Text style={styles.CamText}>Add Photo</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <TouchableOpacity onPress={addProduct} style={{...global.primarytouch, marginTop: 15}}>
+            <TouchableOpacity style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Product</Text>
             </TouchableOpacity>
         </View>
@@ -137,5 +147,27 @@ const styles = StyleSheet.create({
         borderWidth: 1.32,
         borderColor: '#d1d5db',
         borderRadius: 8,
+    },
+    CamContainer: {
+        height: 120,
+        borderWidth: 1.32,
+        borderColor: '#d1d5db',
+        borderRadius: 8,
+        display: 'flex',
+        alignItems: 'center',
+        padding: 8
+    },
+    CamButton: {
+        padding: 8,
+        borderRadius: 8,
+        alignItems: 'center',
+        backgroundColor: '#0ea5e9',
+        width: '50%'
+    },
+    CamText: {
+        color: '#f3f4f6',
+        fontSize: 20,
+        marginHorizontal: 'auto',
+        fontWeight: 'bold'
     }
 })
