@@ -1,7 +1,12 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import global from "../assets/style/global"
+import useAuthStore from "../store/authStore"
 
 export default function EditPerfil() {
+    const { name, email, phone } = useAuthStore()
+
+    console.log(phone)
+
     return (
         <View style={{...global.container, paddingTop: 280}}>
             <View style={{
@@ -17,15 +22,15 @@ export default function EditPerfil() {
                 gap: 16
             }}>
                 <Image source={require('../assets/img/perfil.png')} />
-                <Text style={{fontSize: 32, color: '#fff'}}>Lizza</Text>
+                <Text style={{fontSize: 32, color: '#fff'}}>{name}</Text>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Name</Text>
-                <TextInput placeholder="Enter your name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput value={name} placeholder="Enter your name here..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >E-mail</Text>
-                <TextInput placeholder="Enter your E-mail here..." inputMode="email" style={styles.inputfield}/>
+                <TextInput value={email} placeholder="Enter your E-mail here..." inputMode="email" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >CPF</Text>
@@ -37,7 +42,7 @@ export default function EditPerfil() {
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Telefone</Text>
-                <TextInput placeholder="Enter your phone number here..." inputMode="tel" style={styles.inputfield}/>
+                <TextInput value={phone} placeholder="Enter your phone number here..." inputMode="tel" style={styles.inputfield}/>
             </View>
         </View>
     )

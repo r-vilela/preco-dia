@@ -17,7 +17,6 @@ export default function Camera() {
     const snapPhoto = async () => {
         if (cameraRef.current) {
         const photo = await cameraRef.current.takePictureAsync();
-        console.log(photo);
         }
     };
 

@@ -5,7 +5,7 @@ import { router } from 'expo-router';
 import useAuthStore from '../../store/authStore';
 
 export default function Perfil() {
-    const { logout, loggedUser } = useAuthStore()
+    const { logout, loggedUser, name } = useAuthStore()
 
     if(!loggedUser){
         router.replace('/')
@@ -34,7 +34,7 @@ export default function Perfil() {
                 gap: 16
             }}>
                 <Image source={require('../../assets/img/perfil.png')} />
-                <Text style={{fontSize: 32, color: '#fff'}}>Lizza</Text>
+                <Text style={{fontSize: 32, color: '#fff'}}>{name}</Text>
             </View>
             <View style={styles.optContainer}>
                 <TouchableOpacity onPress={editPerfil} style={styles.opt}>

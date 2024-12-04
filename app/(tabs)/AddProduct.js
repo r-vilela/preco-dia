@@ -1,9 +1,11 @@
 import {  StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
 import useAuthStore from "../../store/authStore";
+import useCategoryStore from "../../store/categoryStore";
+import useLocalStore from "../../store/localStore";
 
 const categories = [
     { id: 1, name: "Fruits"},
@@ -18,11 +20,30 @@ const locals = [
 ]
 
 export default function AddProduct () {
+    const [ cat, setCat ] = useState([])
+    const [ loc, setLoc ] = useState([])
     const { loggedUser } = useAuthStore()
 
-    if(!loggedUser){
-        router.replace('/')
-    }
+    const { getCategory, category } = useCategoryStore()
+    const { getLocal, local } = useLocalStore()
+
+    useEffect(() => {
+        if (!loggedUser) {
+            router.replace('/');
+        } else {
+            getCategory()
+            getLocal()
+           }
+    }, [loggedUser, router]);
+
+    useEffect(() => {
+        if (category && category.length > 0) {
+            setCat(category);
+        }
+        if (local && local.length > 0) {
+            setLoc(local);
+        }
+    }, [category])
 
     const [selectedCategory, setSelectedCategory] = useState()
 
@@ -37,7 +58,6 @@ export default function AddProduct () {
 
     const AddPhoto = () => {
         router.navigate('Camera')
-        console.log('camera')
     }
     
     return (
@@ -55,8 +75,8 @@ export default function AddProduct () {
                             setSelectedCategory(itemvalue)
                         }
                     >
-                        {locals.map((item) => {
-                            return <Picker.Item key={item.id} label={item.name} value={item.name}/>
+                        {loc.map((item) => {
+                            return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
                         })}
                     </Picker>
                 </View>
@@ -82,8 +102,8 @@ export default function AddProduct () {
                             setSelectedCategory(itemvalue)
                         }
                     >
-                        {categories.map((item) => {
-                            return <Picker.Item key={item.id} label={item.name} value={item.name}/>
+                        {cat.map((item) => {
+                            return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
                         })}
                     </Picker>
                 </View>
@@ -100,7 +120,7 @@ export default function AddProduct () {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={{...global.primarytouch, marginTop: 15}}>
+            <TouchableOpacity onPress={addProduct} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Product</Text>
             </TouchableOpacity>
         </View>

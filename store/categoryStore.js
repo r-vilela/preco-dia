@@ -1,22 +1,22 @@
 import { create } from "zustand";
 
-const useProductStore = create((set) => ({
+const useCategoryStore = create((set) => ({
     isLoading: true,
-    products: [],
+    category: [],
     errorMessage: undefined,
     
-    getProd: async () => {
+    getCategory: async () => {
         try {
             set({isLoading: true})
-            const prodReponse = await fetch('https://api-produtos-6p7n.onrender.com/products', {
+            const categoryReponse = await fetch('https://api-produtos-6p7n.onrender.com/categories', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
             })
-            const prodData = await prodReponse.json()
+            const categoryData = await categoryReponse.json()
 
-            if(prodData){
-                set({products: prodData, isLoading: false})
+            if(categoryData){
+                set({category: categoryData, isLoading: false})
             }
             
         } catch (error) {
@@ -25,4 +25,4 @@ const useProductStore = create((set) => ({
     }
 ))
 
-export default useProductStore
+export default useCategoryStore

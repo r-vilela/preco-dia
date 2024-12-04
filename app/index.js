@@ -34,7 +34,6 @@ export default function App() {
         Alert.alert(errorMessage)
       } else if (loggedUser){
         router.replace('Home')
-        console.log(usuario)
       }
 
     } else {

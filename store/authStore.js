@@ -7,6 +7,9 @@ const useAuthStore = create((set) => ({
     token: "",
     errorMessage: undefined,
     avatar: "",
+    name: "",
+    email: "",
+    phone: "",
 
     login: async (user, pass) => {
         try {
@@ -37,10 +40,18 @@ const useAuthStore = create((set) => ({
                 
                 const accessData = await userAccess.json()
 
-                console.log(accessData.length)
+                console.log(accessData.phone)
 
                 if(loginData.accessToken){
-                    set({loggedUser: true, user: user, pass: pass, token: loginData.accessToken})
+                    set({
+                        loggedUser: true, 
+                        user: user, 
+                        pass: pass, 
+                        token: loginData.accessToken,
+                        name: loginData.firstName,
+                        email: loginData.email,
+                        phone: loginData.phone
+                    })
                 }
             }
             

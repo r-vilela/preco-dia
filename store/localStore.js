@@ -1,22 +1,22 @@
 import { create } from "zustand";
 
-const useProductStore = create((set) => ({
+const useLocalStore = create((set) => ({
     isLoading: true,
-    products: [],
+    local: [],
     errorMessage: undefined,
     
-    getProd: async () => {
+    getLocal: async () => {
         try {
             set({isLoading: true})
-            const prodReponse = await fetch('https://api-produtos-6p7n.onrender.com/products', {
+            const localReponse = await fetch('https://api-produtos-6p7n.onrender.com/locations', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
             })
-            const prodData = await prodReponse.json()
+            const localData = await localReponse.json()
 
-            if(prodData){
-                set({products: prodData, isLoading: false})
+            if(localData){
+                set({local: localData, isLoading: false})
             }
             
         } catch (error) {
@@ -25,4 +25,4 @@ const useProductStore = create((set) => ({
     }
 ))
 
-export default useProductStore
+export default useLocalStore

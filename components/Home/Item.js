@@ -2,7 +2,6 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image, StyleSheet, Text, View } from "react-native"
 
 export default function Item({prod}) {
-    console.log(prod)
 
     return (
         <View key={prod.id} style={styles.itemContainer}>
