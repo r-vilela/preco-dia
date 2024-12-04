@@ -4,12 +4,6 @@ import useAuthStore from "../../store/authStore";
 import { router } from "expo-router";
 
 export default function AddCategory() {
-    if (router.isReady) {
-        return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 32}}>Loading...</Text>
-                </View>)
-    }
-
     const { loggedUser } = useAuthStore()
 
     if(!loggedUser){

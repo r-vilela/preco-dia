@@ -1,11 +1,12 @@
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import global from "../../assets/style/global";
 import Item from "../../components/Home/Item";
 import useAuthStore from "../../store/authStore";
 import { router } from "expo-router";
+import useProductStore from "../../store/prodStore";
 
-
-const item = {
+const items = {
     name: 'Abacate Paulista',
     local: 'Mercale - Avenida Ceara',
     author: 'Alan123',
@@ -39,47 +40,75 @@ const dados = [
         local: 'Feira da Quarta Feira',
         author: 'Joana77',
         price: 3.99,
+    },
+    {
+        id: 3,
+        name: 'Manga Verde',
+        local: 'Meta 21 - Abuna',
+        author: 'Bianca75',
+        price: 7.99,
+    },
+    {
+        id: 4,
+        name: 'Morango Grande Verde',
+        local: 'Feira da Quarta Feira',
+        author: 'Joana77',
+        price: 3.99,
     }
-]
+];
 
-export default function Home(){
-    const { loggedUser } = useAuthStore()
+export default function Home() {
+    const [ prod, setProd ] = useState([])
+    const { loggedUser } = useAuthStore();
 
-    if(!loggedUser){
-        router.replace('/')
-    }
+    const { getProd, products } = useProductStore()
 
-    if (router.isReady) {
-        return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                    <Text style={{fontWeight: 'bold', fontSize: 32}}>Loading...</Text>
-                </View>)
-    }
+    useEffect(() => {
+        if (!loggedUser) {
+            router.replace('/');
+        } else {
+            getProd()
+            if(products){
+                setProd(products)
+                console.log(products)
+            }
+
+        }
+    }, [loggedUser, router]);
 
     return (
-        <View style={global.container}>
+        <View style={{flex: 1}}>
             <View style={styles.searchContainer}>
                 <TextInput inputMode="search" style={styles.search} placeholder="Search Product"/>
                 <TouchableOpacity style={styles.searchBtn} title="Search" >
                     <Image source={require('../../assets/img/Search.png')} />
                 </TouchableOpacity>
             </View>
-            <View style={ styles.itemContainer}>
-                {/* <Item prod={item} /> */}
-
-                {dados.map((item) => {
-                    <Item prod={item} />
-                })}
-
-            </View>
-
+            <ScrollView style={global.container}>
+                <View style={styles.itemContainer}>
+                    {/* {prod ? prod.map(item => (
+                        <Item key={item.id} prod={item} />
+                    ))
+                    : <Text>There is no product yet</Text>
+                    } */}
+                </View>
+            </ScrollView>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     searchContainer: {
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        left: 0,
+        zIndex: 1,
+        backgroundColor: 'white',
+        paddingTop: 16,
+        padding: 8,
     },
     search: {
         paddingHorizontal: 16,
@@ -88,7 +117,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 20,
         borderBottomLeftRadius: 20,
         flex: 12,
-        fontSize: 16
+        fontSize: 16,
     },
     searchBtn: {
         flex: 1.5,
@@ -103,6 +132,6 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         gap: 20,
-        paddingTop: 32
+        flexGrow: 1
     }
-})
+});

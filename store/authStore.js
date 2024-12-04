@@ -37,6 +37,8 @@ const useAuthStore = create((set) => ({
                 
                 const accessData = await userAccess.json()
 
+                console.log(accessData.length)
+
                 if(loginData.accessToken){
                     set({loggedUser: true, user: user, pass: pass, token: loginData.accessToken})
                 }
