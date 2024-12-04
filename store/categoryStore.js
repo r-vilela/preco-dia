@@ -1,13 +1,14 @@
 import { create } from "zustand";
 
 const useCategoryStore = create((set) => ({
-    isLoading: true,
+    isLoadingCat: true,
     category: [],
     errorMessage: undefined,
     
     getCategory: async () => {
         try {
-            set({isLoading: true})
+            console.log('Categories')
+            set({isLoadingCat: true})
             const categoryReponse = await fetch('https://api-produtos-6p7n.onrender.com/categories', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
@@ -16,13 +17,33 @@ const useCategoryStore = create((set) => ({
             const categoryData = await categoryReponse.json()
 
             if(categoryData){
-                set({category: categoryData, isLoading: false})
+                set({category: categoryData, isLoadingCat: false})
             }
             
         } catch (error) {
             console.log(error)
         }},
+    postCategory: async (cat) => {
+        try {
+            const url = 'https://api-produtos-6p7n.onrender.com/categories'; 
+    
+            const response = await fetch(url, {
+                method: 'POST', 
+                headers: { 
+                    'Content-Type': 'application/json', 
+                },
+                credentials: 'include', 
+                body: JSON.stringify(cat), 
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Category added:', data);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
-))
+}))
 
 export default useCategoryStore

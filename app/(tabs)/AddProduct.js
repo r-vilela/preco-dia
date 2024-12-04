@@ -1,4 +1,4 @@
-import {  StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {  StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
 import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
@@ -7,25 +7,46 @@ import useAuthStore from "../../store/authStore";
 import useCategoryStore from "../../store/categoryStore";
 import useLocalStore from "../../store/localStore";
 
-const categories = [
-    { id: 1, name: "Fruits"},
-    { id: 2, name: "Clothes"},
-    { id: 3, name: "Accessories"},
-]
-
-const locals = [
-    { id: 1, name: "IG"},
-    { id: 2, name: "Arasuper"},
-    { id: 3, name: "Meta 21"},
-]
-
 export default function AddProduct () {
     const [ cat, setCat ] = useState([])
     const [ loc, setLoc ] = useState([])
-    const { loggedUser } = useAuthStore()
+    const [selectedLanguage, setSelectedLanguage] = useState('');
+    const [selectedLocal, setLocalCategory] = useState('')
+    const [prod, setProd] = useState({
+        nome: "",
+        preco: "",
+        descricao: "",
+        image: "",
+        usuario: ""
+    })
+    
+    const { loggedUser, name } = useAuthStore()
+    const { getCategory, category, isLoadingCat } = useCategoryStore()
+    const { getLocal, local, isLoadingLocal } = useLocalStore()
 
-    const { getCategory, category } = useCategoryStore()
-    const { getLocal, local } = useLocalStore()
+    const handleInputNome = (text) => {
+        setProd({...prod, nome:text})
+    }
+    
+    const handleInputPreco = (text) => {
+        setProd({...prod, preco:text})
+    }
+
+    const handleInputImage = (text) => {
+        setProd({...prod, image:text})
+    }
+
+    const handleInputDescricao = (text) => {
+        setProd({...prod, descricao:text})
+    }
+
+    const handleInputCategory = (obj) => {
+        setProd({...prod, ...obj})
+    }
+
+    const handleInputLocal = (obj) => {
+        setProd({...prod, ...obj})
+    }
 
     useEffect(() => {
         if (!loggedUser) {
@@ -33,22 +54,34 @@ export default function AddProduct () {
         } else {
             getCategory()
             getLocal()
+            setProd({...prod, usuario:name})
            }
     }, [loggedUser, router]);
 
     useEffect(() => {
         if (category && category.length > 0) {
-            setCat(category);
+            if(!isLoadingCat){
+                setCat(category);
+            }
         }
         if (local && local.length > 0) {
-            setLoc(local);
+            if(!isLoadingLocal){
+                setLoc(local);
+            }
         }
-    }, [category])
+    }, [category, isLoadingCat, isLoadingLocal])
 
-    const [selectedCategory, setSelectedCategory] = useState()
+
 
     function addProduct() {
-        ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+        if(selectedLanguage && selectedLocal && prod.nome && prod.preco && prod.usuario){
+            console.log(prod, selectedLanguage, selectedLocal)
+            
+            ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+        } else {
+            console.log(prod, selectedLanguage, selectedLocal)
+            ToastAndroid.show('Enter all the fields available', ToastAndroid.SHORT);
+        }
     }
 
     const [height, setHeight] = useState(0);
@@ -70,11 +103,12 @@ export default function AddProduct () {
                     <Picker 
                         prompt="Select one..."
                         mode="dropdown"
-                        selectedValue={selectedCategory}
+                        selectedValue={selectedLocal}
                         onValueChange={(itemvalue, itemIndex) => 
-                            setSelectedCategory(itemvalue)
+                            handleInputLocal(itemvalue)
                         }
                     >
+                        <Picker.Item label="Select one..." value="" /> 
                         {loc.map((item) => {
                             return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
                         })}
@@ -83,11 +117,11 @@ export default function AddProduct () {
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Product name *</Text>
-                <TextInput placeholder="Enter the product name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputNome} placeholder="Enter the product name here..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Price *</Text>
-                <TextInput placeholder="Enter the product price name here..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputPreco} placeholder="Enter the product price name here..." inputMode="decimal" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Category (Select one) *</Text>
@@ -97,11 +131,12 @@ export default function AddProduct () {
                     <Picker 
                         prompt="Select one..."
                         mode="dropdown"
-                        selectedValue={selectedCategory}
-                        onValueChange={(itemvalue, itemIndex) => 
-                            setSelectedCategory(itemvalue)
+                        selectedValue={selectedLanguage}
+                        onValueChange={(itemValue, itemIndex) =>
+                            handleInputCategory(itemValue)
                         }
                     >
+                        <Picker.Item label="Select one..." value="" /> 
                         {cat.map((item) => {
                             return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
                         })}
@@ -109,8 +144,8 @@ export default function AddProduct () {
                 </View>
             </View>
             <View style={styles.inputObs} >
-                <Text style={styles.txt} >Observation *</Text>
-                <TextInput placeholder="Enter any useful observation..." multiline style={styles.inputobs} onContentSizeChange={onContentSizeChange}/>
+                <Text style={styles.txt} >Description *</Text>
+                <TextInput onChangeText={handleInputDescricao} placeholder="Enter any useful observation..." multiline style={styles.inputobs} onContentSizeChange={onContentSizeChange}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Photos *</Text>

@@ -1,48 +1,104 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
 import useAuthStore from "../../store/authStore";
 import { router } from "expo-router";
+import { useState } from "react";
+import useLocalStore from "../../store/localStore";
 
 export default function AddLocal () {
+    const [ loc, setLoc] = useState({
+        nome: '',
+        cep: '',
+        logradouro: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        estado: '',
+    })
+
     const { loggedUser } = useAuthStore()
+    const { postLocal } = useLocalStore()
 
     if(!loggedUser){
         router.replace('/')
     }
 
+    const handleInputNome = (text) => {
+        setLoc({...loc, nome: text})
+    }
+    
+    const handleInputCEP = (text) => {
+        setLoc({...loc, cep:text})
+    }
+
+    const handleInputLog = (text) => {
+        setLoc({...loc, logradouro:text})
+    }
+
+    const handleInputNum = (text) => {
+        setLoc({...loc, numero:text})
+    }
+
+    const handleInputBairro = (text) => {
+        setLoc({...loc, bairro:text})
+    }
+
+    const handleInputCidade = (text) => {
+        setLoc({...loc, cidade:text})
+    }
+
+    const handleInputEstado = (text) => {
+        setLoc({...loc, estado:text})
+    }
+
     function addLocal() {
-        ToastAndroid.show('Local added!', ToastAndroid.SHORT);
+        console.log(loc)
+        if(loc.nome && loc.cep && loc.logradouro && loc.numero && loc.bairro && loc.cidade && loc.estado) {
+            postLocal(loc)
+            setLoc({
+                nome: '',
+                cep: '',
+                logradouro: '',
+                numero: '',
+                bairro: '',
+                cidade: '',
+                estado: '',
+            })
+            ToastAndroid.show('Local added!', ToastAndroid.SHORT);
+        } else {
+            ToastAndroid.show('Enter all the fields available!', ToastAndroid.SHORT);
+        }
     }
     
     return (
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >Local`s name</Text>
-                <TextInput placeholder="Enter the local name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputNome} placeholder="Enter the local name here..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >CEP</Text>
-                <TextInput placeholder="Enter CEP..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputCEP} placeholder="Enter CEP..." inputMode="decimal" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Street</Text>
-                <TextInput placeholder="Enter the street..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputLog} placeholder="Enter the street..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Nº</Text>
-                <TextInput placeholder="Enter the place Nº..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputNum} placeholder="Enter the place Nº..." inputMode="decimal" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Neighborhood</Text>
-                <TextInput placeholder="Enter the neighborhood name..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputBairro} placeholder="Enter the neighborhood name..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >City</Text>
-                <TextInput placeholder="Enter the city name..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputCidade} placeholder="Enter the city name..." inputMode="text" style={styles.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >State</Text>
-                <TextInput placeholder="Espera-se uma foto" style={styles.inputfield} />
+                <TextInput onChangeText={handleInputEstado} placeholder="Enter the state name..." style={styles.inputfield} />
             </View>
             <TouchableOpacity onPress={addLocal} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Local</Text>

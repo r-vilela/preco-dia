@@ -59,6 +59,7 @@ const dados = [
 
 export default function Home() {
     const [ prod, setProd ] = useState([])
+    const [ search, setSearch ] = useState('')
     const { loggedUser } = useAuthStore();
 
     const { getProd, products } = useProductStore()
@@ -74,23 +75,41 @@ export default function Home() {
     useEffect(() => {
         if (products && products.length > 0) {
             setProd(products);
+        } else {
+            setProd([])
         }
+
     }, [products])
+
+    const handleSearch = (text) => {
+        if ( text && text.length > 0){
+            setSearch(text)
+        } else {
+            getProd()
+        }
+    }
+
+    const searchProd = () => {
+        if( search && search.length > 0 ){
+            getProd(search)
+            console.log(prod)
+        }
+    }
 
     return (
         <View style={{flex: 1}}>
             <View style={styles.searchContainer}>
-                <TextInput inputMode="search" style={styles.search} placeholder="Search Product"/>
-                <TouchableOpacity style={styles.searchBtn} title="Search" >
+                <TextInput onChangeText={handleSearch} inputMode="search" style={styles.search} placeholder="Search Product"/>
+                <TouchableOpacity onPress={searchProd} style={styles.searchBtn} title="Search" >
                     <Image source={require('../../assets/img/Search.png')} />
                 </TouchableOpacity>
             </View>
             <ScrollView style={global.container}>
                 <View style={styles.itemContainer}>
-                    {prod ? prod.map(item => (
+                    {prod && prod.length > 0 ? prod.map(item => (
                         <Item key={item.id} prod={item} />
                     ))
-                    : <Text>There is no product yet</Text>
+                    : <Text style={{fontSize: 24, fontWeight: 'bold'}}>No products available...</Text>
                     }
                 </View>
             </ScrollView>

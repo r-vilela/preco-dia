@@ -1,10 +1,9 @@
 import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { CameraView, useCameraPermissions } from "expo-camera"
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Camera() {
     const [permission, requestPermission] = useCameraPermissions();
-    // const [type, setType] = useState(Camera.Constants.Type.back);
     const cameraRef = useRef(null);
 
     useEffect(() => {
@@ -16,17 +15,16 @@ export default function Camera() {
 
     const snapPhoto = async () => {
         if (cameraRef.current) {
-        const photo = await cameraRef.current.takePictureAsync();
+            const photo = await cameraRef.current.takePictureAsync();
+            console.log('photo', photo);
         }
-    };
+    }
 
     if (!permission) {
-        // Camera permissions are still loading.
         return <View />;
     }
 
     if (!permission.granted) {
-        // Camera permissions are not granted yet.
         return (
         <View style={styles.container}>
             <Text style={styles.message}>We need your permission to show the camera</Text>

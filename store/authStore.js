@@ -13,6 +13,7 @@ const useAuthStore = create((set) => ({
 
     login: async (user, pass) => {
         try {
+            console.log('Autentication')
             const loginResponse = await fetch('https://dummyjson.com/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -39,8 +40,6 @@ const useAuthStore = create((set) => ({
                 })
                 
                 const accessData = await userAccess.json()
-
-                console.log(accessData.phone)
 
                 if(loginData.accessToken){
                     set({

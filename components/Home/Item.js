@@ -1,12 +1,12 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Image, StyleSheet, Text, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 export default function Item({prod}) {
 
     return (
-        <View key={prod.id} style={styles.itemContainer}>
+        <TouchableOpacity key={prod.id} style={styles.itemContainer}>
             <View style={styles.itemImageContainer}>
-                <Image style={styles.itemImage} source={require('../../assets/img/abaca.png')} />
+                <Image style={styles.itemImage} source={{uri:'https://api-produtos-6p7n.onrender.com/'+prod.image}} />
             </View>
             <View style={styles.itemDesc}>
                 <View style={{gap: 10}}>
@@ -27,7 +27,7 @@ export default function Item({prod}) {
                     </Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
@@ -47,9 +47,10 @@ const styles = StyleSheet.create({
     itemImage: {
         width: '100%',
         height: 160,
-        objectFit: 'contain'
+        objectFit: 'fill',
     },
     itemDesc: {
         flex: 3,
+        marginLeft: 8
     }
 })

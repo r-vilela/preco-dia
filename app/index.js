@@ -13,12 +13,10 @@ export default function App() {
   const { login, errorMessage, loggedUser } = useAuthStore()
 
   const handleInputUsuario = (text) => {
-    
     setUsuario({...usuario, user:text})
   }
-
+  
   const handleInputPass = (text) => {
-    
     setUsuario({...usuario, pass:text})
   }
 
@@ -27,11 +25,12 @@ export default function App() {
   }
 
   const logar = async () => {
-    
     if(usuario.user && usuario.pass) {
       login(usuario.user, usuario.pass)
+
       if(errorMessage){
         Alert.alert(errorMessage)
+        
       } else if (loggedUser){
         router.replace('Home')
       }
