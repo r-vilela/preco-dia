@@ -5,7 +5,17 @@ import { router } from 'expo-router';
 import useAuthStore from '../../store/authStore';
 
 export default function Perfil() {
+    if (router.isReady) {
+        return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 32}}>Loading...</Text>
+                </View>)
+    }
+
     const { logout, loggedUser } = useAuthStore()
+
+    if(!loggedUser){
+        router.replace('/')
+    }
 
     function editPerfil() {
         router.navigate('EditPerfil')

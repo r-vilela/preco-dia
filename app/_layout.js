@@ -22,6 +22,10 @@ export default function RootLayout(){
         ...atackOpt,
         title: 'Camera',
       }}/>
+      <Stack.Screen name ="Register" options={{
+        ...atackOpt,
+        title: 'Register',
+      }}/>
     </Stack>
   )
 }

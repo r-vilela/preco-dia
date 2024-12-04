@@ -45,6 +45,16 @@ const dados = [
 export default function Home(){
     const { loggedUser } = useAuthStore()
 
+    if(!loggedUser){
+        router.replace('/')
+    }
+
+    if (router.isReady) {
+        return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 32}}>Loading...</Text>
+                </View>)
+    }
+
     return (
         <View style={global.container}>
             <View style={styles.searchContainer}>

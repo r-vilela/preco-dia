@@ -22,6 +22,10 @@ export default function App() {
     setUsuario({...usuario, pass:text})
   }
 
+  const handleRegister = () => {
+    router.navigate('Register')
+  }
+
   const logar = async () => {
     
     if(usuario.user && usuario.pass) {
@@ -46,17 +50,17 @@ export default function App() {
       <View style={styles.content}>
         <View style={styles.input} >
           <Text style={styles.txt} >User</Text>
-          <TextInput onChangeText={handleInputUsuario} placeholder='Enter your email...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
+          <TextInput onChangeText={handleInputUsuario} placeholder='Enter your username here...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.txt}>Password</Text>
-          <TextInput onChangeText={handleInputPass} placeholder='Enter your password...' secureTextEntry style={global.inputfield} ></TextInput>
+          <TextInput onChangeText={handleInputPass} placeholder='Enter your password here...' autoCapitalize="none" secureTextEntry style={global.inputfield} ></TextInput>
         </View> 
         <TouchableOpacity onPress={logar} style={global.primarytouch}>
           <Text style={global.touchtxt}>Log In</Text>
         </TouchableOpacity>
         <View style={{display: 'flex', flexDirection: 'row'}}>
-          <Text style={{width: 130}}>Don`t have an account? </Text><Text style={global.link}>Register</Text>
+          <Text style={{width: 130}}>Don`t have an account? </Text><TouchableOpacity onPress={handleRegister}><Text style={global.link}>Register</Text></TouchableOpacity>
         </View>
       </View>
     </View>

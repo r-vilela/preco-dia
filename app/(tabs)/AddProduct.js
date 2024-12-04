@@ -18,7 +18,17 @@ const locals = [
 ]
 
 export default function AddProduct () {
+    if (router.isReady) {
+        return (<View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                    <Text style={{fontWeight: 'bold', fontSize: 32}}>Loading...</Text>
+                </View>)
+    }
+
     const { loggedUser } = useAuthStore()
+
+    if(!loggedUser){
+        router.replace('/')
+    }
 
     const [selectedCategory, setSelectedCategory] = useState()
 
