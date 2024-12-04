@@ -68,13 +68,14 @@ export default function Home() {
             router.replace('/');
         } else {
             getProd()
-            if(products){
-                setProd(products)
-                console.log(products)
-            }
-
-        }
+           }
     }, [loggedUser, router]);
+
+    useEffect(() => {
+        if (products && products.length > 0) {
+            setProd(products);
+        }
+    }, [products])
 
     return (
         <View style={{flex: 1}}>
@@ -86,11 +87,11 @@ export default function Home() {
             </View>
             <ScrollView style={global.container}>
                 <View style={styles.itemContainer}>
-                    {/* {prod ? prod.map(item => (
+                    {prod ? prod.map(item => (
                         <Item key={item.id} prod={item} />
                     ))
                     : <Text>There is no product yet</Text>
-                    } */}
+                    }
                 </View>
             </ScrollView>
         </View>

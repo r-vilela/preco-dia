@@ -2,6 +2,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image, StyleSheet, Text, View } from "react-native"
 
 export default function Item({prod}) {
+    console.log(prod)
 
     return (
         <View key={prod.id} style={styles.itemContainer}>
@@ -10,20 +11,20 @@ export default function Item({prod}) {
             </View>
             <View style={styles.itemDesc}>
                 <View style={{gap: 10}}>
-                    <Text style={{fontSize: 24, fontWeight: 'bold'}}>{prod.name}</Text>
+                    <Text style={{fontSize: 24, fontWeight: 'bold'}}>{prod.nome}</Text>
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
                         <FontAwesome size={20} name='map-marker' />
-                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.local}</Text>
+                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.Location.nome}</Text>
                     </View >
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
                         <FontAwesome size={20} name='user-o' />
-                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.author}</Text>
+                        <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.usuario}</Text>
                     </View>
                 </View>
                 <View style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}>
                     <Text style={{fontSize: 24, color: '#15803d', paddingTop: 15}}>$</Text>
                     <Text style={{fontSize: 70, color: '#15803d'}}>
-                        {prod.price}
+                        {prod.preco}
                     </Text>
                 </View>
             </View>
