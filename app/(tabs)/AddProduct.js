@@ -3,6 +3,7 @@ import global from "../../assets/style/global";
 import { useState } from "react";
 import { Picker } from "@react-native-picker/picker";
 import { router } from "expo-router";
+import useAuthStore from "../../store/authStore";
 
 const categories = [
     { id: 1, name: "Fruits"},
@@ -17,6 +18,8 @@ const locals = [
 ]
 
 export default function AddProduct () {
+    const { loggedUser } = useAuthStore()
+
     const [selectedCategory, setSelectedCategory] = useState()
 
     function addProduct() {

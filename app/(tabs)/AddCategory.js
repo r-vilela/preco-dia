@@ -1,7 +1,11 @@
 import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global"
+import useAuthStore from "../../store/authStore";
+import { router } from "expo-router";
 
 export default function AddCategory() {
+    const { loggedUser } = useAuthStore()
+
     function addCategory() {
         ToastAndroid.show('Category added!', ToastAndroid.SHORT);
     }

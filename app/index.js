@@ -1,10 +1,41 @@
-import { router } from 'expo-router';
-import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import global from '../assets/style/global'
+import { useState } from 'react';
+import useAuthStore from '../store/authStore';
+import { router } from 'expo-router';
 
 export default function App() {
-  function logar() {
-    router.replace('Home')
+  const [usuario, setUsuario] = useState({
+    user: "emilys",
+    pass: "emilyspass"
+  })
+
+  const { login, errorMessage, loggedUser } = useAuthStore()
+
+  const handleInputUsuario = (text) => {
+    
+    setUsuario({...usuario, user:text})
+  }
+
+  const handleInputPass = (text) => {
+    
+    setUsuario({...usuario, pass:text})
+  }
+
+  const logar = async () => {
+    
+    if(usuario.user && usuario.pass) {
+      login(usuario.user, usuario.pass)
+      if(errorMessage){
+        Alert.alert(errorMessage)
+      } else if (loggedUser){
+        router.replace('Home')
+        console.log(usuario)
+      }
+
+    } else {
+      ToastAndroid.show('Enter all the credentials!', ToastAndroid.TOP)
+    }
   }
   return (
     <View style={global.container}>
@@ -15,12 +46,12 @@ export default function App() {
       <View style={styles.content}>
         <View style={styles.input} >
           <Text style={styles.txt} >User</Text>
-          <TextInput placeholder='Enter your email...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
+          <TextInput onChangeText={handleInputUsuario} placeholder='Enter your email...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.txt}>Password</Text>
-          <TextInput placeholder='Enter your password...' secureTextEntry style={global.inputfield} ></TextInput>
-        </View>
+          <TextInput onChangeText={handleInputPass} placeholder='Enter your password...' secureTextEntry style={global.inputfield} ></TextInput>
+        </View> 
         <TouchableOpacity onPress={logar} style={global.primarytouch}>
           <Text style={global.touchtxt}>Log In</Text>
         </TouchableOpacity>

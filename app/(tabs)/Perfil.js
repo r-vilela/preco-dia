@@ -2,10 +2,17 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global"
 import { router } from 'expo-router';
+import useAuthStore from '../../store/authStore';
 
 export default function Perfil() {
+    const { logout, loggedUser } = useAuthStore()
+
     function editPerfil() {
         router.navigate('EditPerfil')
+    }
+
+    const handleLogout = () => {
+        logout()
     }
 
     return (
@@ -47,7 +54,7 @@ export default function Perfil() {
                         <Text style={styles.desc}>Delete account or registers</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.opt}>
+                <TouchableOpacity onPress={handleLogout} style={styles.opt}>
                     <FontAwesome size={60} name='close' color={'#374151'} />
                     <View style={styles.textContainer}>
                         <Text style={styles.title}>Logout</Text>

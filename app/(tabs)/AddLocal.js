@@ -1,9 +1,10 @@
-import { Animated, FlatList, SectionList, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global";
-import { useState } from "react";
-import { Picker } from "@react-native-picker/picker";
+import useAuthStore from "../../store/authStore";
+import { router } from "expo-router";
 
 export default function AddLocal () {
+    const { loggedUser } = useAuthStore()
 
     function addLocal() {
         ToastAndroid.show('Local added!', ToastAndroid.SHORT);

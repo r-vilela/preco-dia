@@ -1,6 +1,8 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import global from "../../assets/style/global";
 import Item from "../../components/Home/Item";
+import useAuthStore from "../../store/authStore";
+import { router } from "expo-router";
 
 
 const item = {
@@ -41,6 +43,8 @@ const dados = [
 ]
 
 export default function Home(){
+    const { loggedUser } = useAuthStore()
+
     return (
         <View style={global.container}>
             <View style={styles.searchContainer}>
