@@ -1,4 +1,5 @@
 import { Stack } from "expo-router";
+import { StateProvider } from "../Context/ProductContext";
 
 export default function RootLayout(){
   const atackOpt = {
@@ -11,21 +12,23 @@ export default function RootLayout(){
   }
 
   return (
-    <Stack>
-      <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
-      <Stack.Screen name="index" options={{headerShown: false,}}/>
-      <Stack.Screen name ="EditPerfil" options={{
-        ...atackOpt,
-        title: 'Edit Perfil',
-      }}/>
-      <Stack.Screen name ="Camera" options={{
-        ...atackOpt,
-        title: 'Camera',
-      }}/>
-      <Stack.Screen name ="Register" options={{
-        ...atackOpt,
-        title: 'Register',
-      }}/>
-    </Stack>
+    <StateProvider>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
+        <Stack.Screen name="index" options={{headerShown: false,}}/>
+        <Stack.Screen name ="EditPerfil" options={{
+          ...atackOpt,
+          title: 'Edit Perfil',
+        }}/>
+        <Stack.Screen name ="Camera" options={{
+          ...atackOpt,
+          title: 'Camera',
+        }}/>
+        <Stack.Screen name ="Register" options={{
+          ...atackOpt,
+          title: 'Register',
+        }}/>
+      </Stack>
+    </StateProvider>
   )
 }

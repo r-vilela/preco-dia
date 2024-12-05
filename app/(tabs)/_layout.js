@@ -1,5 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from "expo-router";
+import { StateProvider } from '../../Context/ProductContext';
 
 export default function TabLayout () {
    const headerOpt = {

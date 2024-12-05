@@ -1,7 +1,14 @@
-import {  StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import {  StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
 import global from "../assets/style/global";
+import { router } from "expo-router";
 
 export default function Register () {
+
+    const handleRegister = ()=>{
+
+        ToastAndroid.show('Successfully registered!', ToastAndroid.SHORT);
+        router.replace('/')
+    }
     
     return (
         <View style={global.container}>
@@ -21,7 +28,7 @@ export default function Register () {
                 <Text style={styles.txt} >Username</Text>
                 <TextInput placeholder="Enter your username here..." style={styles.inputfield}/>
             </View>
-            <TouchableOpacity style={{...global.primarytouch, marginTop: 15}}>
+            <TouchableOpacity onPress={handleRegister} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Register</Text>
             </TouchableOpacity>
         </View>

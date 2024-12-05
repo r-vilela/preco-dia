@@ -1,28 +1,25 @@
-import {  StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
-import global from "../../assets/style/global";
-import { useEffect, useState } from "react";
 import { Picker } from "@react-native-picker/picker";
-import { router } from "expo-router";
+import { Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native";
+import global from "../../assets/style/global";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useContext, useEffect, useState } from "react";
 import useAuthStore from "../../store/authStore";
 import useCategoryStore from "../../store/categoryStore";
 import useLocalStore from "../../store/localStore";
+import { router } from "expo-router";
+import { StateContext } from "../../Context/ProductContext";
 
-export default function AddProduct () {
+export default function Page() {
     const [ cat, setCat ] = useState([])
     const [ loc, setLoc ] = useState([])
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [selectedLocal, setLocalCategory] = useState('')
-    const [prod, setProd] = useState({
-        nome: "",
-        preco: "",
-        descricao: "",
-        image: "",
-        usuario: ""
-    })
-    
+    const [ prod, setProd ] = useContext(StateContext)
+        
     const { loggedUser, name } = useAuthStore()
     const { getCategory, category, isLoadingCat } = useCategoryStore()
     const { getLocal, local, isLoadingLocal } = useLocalStore()
+
 
     const handleInputNome = (text) => {
         setProd({...prod, nome:text})
@@ -56,7 +53,7 @@ export default function AddProduct () {
             getLocal()
             setProd({...prod, usuario:name})
            }
-    }, [loggedUser, router]);
+    }, [loggedUser]);
 
     useEffect(() => {
         if (category && category.length > 0) {
@@ -70,8 +67,6 @@ export default function AddProduct () {
             }
         }
     }, [category, isLoadingCat, isLoadingLocal])
-
-
 
     function addProduct() {
         if(selectedLanguage && selectedLocal && prod.nome && prod.preco && prod.usuario){
@@ -90,10 +85,11 @@ export default function AddProduct () {
     );
 
     const AddPhoto = () => {
-        router.navigate('Camera')
+        router.push({ pathname: "Camera", params: { handleInputImage: handleInputImage } })
     }
-    
-    return (
+
+    return(
+
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >Local (Select one) *</Text>
@@ -101,7 +97,6 @@ export default function AddProduct () {
                     style={styles.picker}
                 >
                     <Picker 
-                        prompt="Select one..."
                         mode="dropdown"
                         selectedValue={selectedLocal}
                         onValueChange={(itemvalue, itemIndex) => 
@@ -117,11 +112,21 @@ export default function AddProduct () {
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Product name *</Text>
-                <TextInput onChangeText={handleInputNome} placeholder="Enter the product name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput 
+                    onChangeText={handleInputNome} 
+                    placeholder="Enter the product name here..." 
+                    inputMode="text" 
+                    style={styles.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Price *</Text>
-                <TextInput onChangeText={handleInputPreco} placeholder="Enter the product price name here..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput 
+                    onChangeText={handleInputPreco} 
+                    placeholder="Enter the product price name here..." 
+                    inputMode="decimal" 
+                    style={styles.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Category (Select one) *</Text>
@@ -129,7 +134,6 @@ export default function AddProduct () {
                     style={styles.picker}
                 >
                     <Picker 
-                        prompt="Select one..."
                         mode="dropdown"
                         selectedValue={selectedLanguage}
                         onValueChange={(itemValue, itemIndex) =>
@@ -145,14 +149,27 @@ export default function AddProduct () {
             </View>
             <View style={styles.inputObs} >
                 <Text style={styles.txt} >Description *</Text>
-                <TextInput onChangeText={handleInputDescricao} placeholder="Enter any useful observation..." multiline style={styles.inputobs} onContentSizeChange={onContentSizeChange}/>
+                <TextInput 
+                    onChangeText={handleInputDescricao} 
+                    placeholder="Enter any useful observation..." 
+                    multiline 
+                    style={styles.inputobs} 
+                    onContentSizeChange={onContentSizeChange}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Photos *</Text>
                 <View style={styles.CamContainer}>
-                    <TouchableOpacity onPress={AddPhoto} style={styles.CamButton}>
-                        <Text style={styles.CamText}>Add Photo</Text>
-                    </TouchableOpacity>
+                    {prod.image && prod.image.length > 0 ? 
+                        <Image style={{height:180, width: 180}} source={{uri:prod.image}} />
+                    :
+                    <>
+                        <FontAwesome size={150} name='image' color={'#374151'} />
+                        <TouchableOpacity onPress={AddPhoto} style={styles.CamButton}>
+                            <Text style={styles.CamText}>Add Photo</Text>
+                        </TouchableOpacity>
+                    </>    
+                    }
                 </View>
             </View>
             <TouchableOpacity onPress={addProduct} style={{...global.primarytouch, marginTop: 15}}>
@@ -161,6 +178,7 @@ export default function AddProduct () {
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     input: {
@@ -211,20 +229,19 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     CamContainer: {
-        height: 120,
         borderWidth: 1.32,
         borderColor: '#d1d5db',
         borderRadius: 8,
         display: 'flex',
         alignItems: 'center',
-        padding: 8
+        padding: 8,
     },
     CamButton: {
         padding: 8,
         borderRadius: 8,
         alignItems: 'center',
         backgroundColor: '#0ea5e9',
-        width: '50%'
+        width: '50%',
     },
     CamText: {
         color: '#f3f4f6',

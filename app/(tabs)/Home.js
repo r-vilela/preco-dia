@@ -6,57 +6,6 @@ import useAuthStore from "../../store/authStore";
 import { router } from "expo-router";
 import useProductStore from "../../store/prodStore";
 
-const items = {
-    name: 'Abacate Paulista',
-    local: 'Mercale - Avenida Ceara',
-    author: 'Alan123',
-    price: 8.99,
-}
-const dados = [
-    {
-        id: 1,
-        name: 'Abacate Paulista',
-        local: 'Mercale - Avenida Ceara',
-        author: 'Alan123',
-        price: 8.99,
-    },
-    {
-        id: 2,
-        name: 'Abacaxi Verde',
-        local: 'IG - Avenida Calama',
-        author: 'Raul29',
-        price: 11.99,
-    },
-    {
-        id: 3,
-        name: 'Manga Verde',
-        local: 'Meta 21 - Abuna',
-        author: 'Bianca75',
-        price: 7.99,
-    },
-    {
-        id: 4,
-        name: 'Morango Grande Verde',
-        local: 'Feira da Quarta Feira',
-        author: 'Joana77',
-        price: 3.99,
-    },
-    {
-        id: 3,
-        name: 'Manga Verde',
-        local: 'Meta 21 - Abuna',
-        author: 'Bianca75',
-        price: 7.99,
-    },
-    {
-        id: 4,
-        name: 'Morango Grande Verde',
-        local: 'Feira da Quarta Feira',
-        author: 'Joana77',
-        price: 3.99,
-    }
-];
-
 export default function Home() {
     const [ prod, setProd ] = useState([])
     const [ search, setSearch ] = useState('')

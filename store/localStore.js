@@ -33,7 +33,7 @@ const useLocalStore = create((set) => ({
                         'Content-Type': 'application/json', 
                     },
                     credentials: 'include', 
-                    body: JSON.stringify(...loc), 
+                    body: JSON.stringify(loc), 
                 });
         
                 if (response.ok) {

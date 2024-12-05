@@ -25,7 +25,7 @@ const useCategoryStore = create((set) => ({
         }},
     postCategory: async (cat) => {
         try {
-            const url = 'https://api-produtos-6p7n.onrender.com/categories'; 
+            const url = 'https://api-produtos-6p7n.onrender.com/categories/add'; 
     
             const response = await fetch(url, {
                 method: 'POST', 
