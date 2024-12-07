@@ -20,7 +20,10 @@ export default global = StyleSheet.create({
     inputfield:{
         borderWidth: 0.5,
         borderColor: '#6b7280',
-        borderRadius: 8
+        borderRadius: 8,
+        fontSize: 16,
+        paddingHorizontal: 8,
+        paddingVertical: 8
     },
     link: {
         color: '#38bdf8', 

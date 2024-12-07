@@ -1,6 +1,6 @@
 import { Alert, Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import global from '../assets/style/global'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAuthStore from '../store/authStore';
 import { router } from 'expo-router';
 
@@ -24,17 +24,19 @@ export default function App() {
     router.navigate('Register')
   }
 
+  useEffect(() => {
+    if(errorMessage){
+      Alert.alert(errorMessage)
+      
+    } else if (loggedUser){
+      router.replace('Home')
+    }
+  }, [errorMessage, loggedUser])
+
   const logar = async () => {
     if(usuario.user && usuario.pass) {
-      login(usuario.user, usuario.pass)
-
-      if(errorMessage){
-        Alert.alert(errorMessage)
-        
-      } else if (loggedUser){
-        router.replace('Home')
-      }
-
+      await login(usuario.user, usuario.pass)
+      
     } else {
       ToastAndroid.show('Enter all the credentials!', ToastAndroid.TOP)
     }

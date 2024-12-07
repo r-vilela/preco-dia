@@ -8,7 +8,10 @@ export default function Item({prod}) {
         <TouchableOpacity key={prod.id} style={styles.itemContainer}>
             <View style={styles.itemImageContainer}>
                 {prod.image && prod.image.length > 0 ? 
-                    <Image style={styles.itemImage} source={{uri:'https://api-produtos-6p7n.onrender.com/'+prod.image}} />
+                    <Image
+                        style={styles.itemImage} 
+                        source={{uri:'https://api-produtos-6p7n.onrender.com/'+prod.image}} 
+                    />
                 :
                     <FontAwesome size={160} name='image' color={'#374151'} />
                 }

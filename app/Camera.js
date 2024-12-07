@@ -24,14 +24,9 @@ export default function Camera( addPhoto ) {
 
     const takePicture = async () => {
         if (cameraRef.current) {
-            console.log('olha o passarinho')
             const photo = await cameraRef.current.takePictureAsync();
             setImage(photo.uri)
         }
-    }
-
-    if (!permission) {
-        return <View />;
     }
 
     if (!permission.granted) {
