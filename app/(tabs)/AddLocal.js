@@ -52,7 +52,6 @@ export default function AddLocal () {
     }
 
     function addLocal() {
-        console.log(loc)
         if(loc.nome && loc.cep && loc.logradouro && loc.numero && loc.bairro && loc.cidade && loc.estado) {
             postLocal(loc)
             setLoc({

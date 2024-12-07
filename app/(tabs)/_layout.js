@@ -1,6 +1,6 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from "expo-router";
-import { StateProvider } from '../../Context/ProductContext';
+import Fontisto from '@expo/vector-icons/Fontisto';
 
 export default function TabLayout () {
    const headerOpt = {
@@ -42,7 +42,7 @@ export default function TabLayout () {
                 options={{
                     ...headerOpt,
                     title: 'Add a Local',
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name='map-marker' color={color} />,
+                    tabBarIcon: ({ color }) => <Fontisto name="map-marker-alt" size={28} color={color} />,
                 }}
             />
             <Tabs.Screen

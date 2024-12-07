@@ -44,7 +44,6 @@ const useLocalStore = create((set) => ({
                 console.error('Error:', error);
             }
         }
-        
     }
 ))
 

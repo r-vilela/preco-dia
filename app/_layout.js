@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { StateProvider } from "../Context/ProductContext";
+import { StateProvider } from "../context/ProductContext";
 
 export default function RootLayout(){
   const atackOpt = {

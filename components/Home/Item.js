@@ -1,4 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Fontisto from '@expo/vector-icons/Fontisto';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 export default function Item({prod}) {
@@ -12,18 +13,18 @@ export default function Item({prod}) {
                 <View style={{gap: 10}}>
                     <Text style={{fontSize: 24, fontWeight: 'bold'}}>{prod.nome}</Text>
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
-                        <FontAwesome size={20} name='map-marker' />
+                        <Fontisto size={20} name="map-marker-alt" color={'#374151'} />
                         <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.Location.nome}</Text>
                     </View >
                     <View style={{display: 'flex', flexDirection: 'row', gap: 8}}>
-                        <FontAwesome size={20} name='user-o' />
+                        <FontAwesome size={20} name='user-o' color={'#374151'} />
                         <Text style={{fontSize: 18, fontWeight: 'semibold'}}>{prod.usuario}</Text>
                     </View>
                 </View>
                 <View style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}>
                     <Text style={{fontSize: 24, color: '#15803d', paddingTop: 15}}>$</Text>
-                    <Text style={{fontSize: 70, color: '#15803d'}}>
-                        {prod.preco}
+                    <Text  style={{fontSize: 70, color: '#15803d'}}>
+                        {parseFloat(prod.preco).toFixed(2)}
                     </Text>
                 </View>
             </View>

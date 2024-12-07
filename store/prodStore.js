@@ -26,10 +26,6 @@ const useProductStore = create((set) => ({
                     credentials: 'include'
                 });
             }
-            
-            if (!prodReponse.ok) {
-                throw new Error('Failed to fetch products');
-            }
 
             const prodData = await prodReponse.json();
 
@@ -40,6 +36,36 @@ const useProductStore = create((set) => ({
         } catch (error) {
             console.log(error)
         }},
+        postProd: async (prod) => {
+            try {
+                const data = new FormData()
+                for (const key in prod) {
+                    if (prod.hasOwnProperty(key)) {
+                      data.append(key, prod[key]);
+                    }
+                  }
+
+                const url = 'https://api-produtos-6p7n.onrender.com/products';
+        
+                const response = await fetch(url, {
+                    method: 'POST', 
+                    headers: { 
+                        'Content-Type': 'multipart/form-data', 
+                    },
+                    credentials: 'include', 
+                    body: data,
+                });
+        
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Product added:', data);
+                } else {
+                    console.log(response)
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
     }
 ))
 

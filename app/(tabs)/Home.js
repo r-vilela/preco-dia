@@ -41,7 +41,6 @@ export default function Home() {
     const searchProd = () => {
         if( search && search.length > 0 ){
             getProd(search)
-            console.log(prod)
         }
     }
 

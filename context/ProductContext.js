@@ -8,7 +8,9 @@ export const StateProvider = (props) => {
         preco: "",
         descricao: "",
         image: "",
-        usuario: ""
+        usuario: "",
+        categoriaId: "",
+        locaId: "",
     })
 
     return(

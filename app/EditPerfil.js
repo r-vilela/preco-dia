@@ -5,8 +5,6 @@ import useAuthStore from "../store/authStore"
 export default function EditPerfil() {
     const { name, email, phone } = useAuthStore()
 
-    console.log(phone)
-
     return (
         <View style={{...global.container, paddingTop: 280}}>
             <View style={{

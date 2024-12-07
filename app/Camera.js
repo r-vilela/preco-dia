@@ -2,9 +2,13 @@ import { Button, Text, TouchableOpacity, View } from "react-native"
 import { CameraView, useCameraPermissions } from "expo-camera"
 import { useContext, useEffect, useRef, useState } from "react";
 import { router } from "expo-router";
-import { StateContext } from "../Context/ProductContext";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import { StateContext } from "../context/ProductContext";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function Camera( addPhoto ) {
+    const [facing, setFacing] = useState('back');
+    const [flash, setFlash] = useState('off');
     const [ prod, setProd ] = useContext(StateContext)
     const [ image, setImage ] = useState('')
     const [permission, requestPermission] = useCameraPermissions();
@@ -13,13 +17,14 @@ export default function Camera( addPhoto ) {
 
     useEffect(() => {
         if(image){
-            setProd({...prod, image:image})
+            setProd({...prod, image:{uri:image, type: 'image/jpeg', name: 'image.jpeg'}})
             router.back()
         }
     }, [image])
 
     const takePicture = async () => {
         if (cameraRef.current) {
+            console.log('olha o passarinho')
             const photo = await cameraRef.current.takePictureAsync();
             setImage(photo.uri)
         }
@@ -38,14 +43,43 @@ export default function Camera( addPhoto ) {
         );
     }
 
+    const toggleCameraFacing = () => {
+        setFacing(current => (current === 'back' ? 'front' : 'back'))
+    }
+    const toggleCameraFlash = () => {
+        setFlash(current => (current === 'off' ? 'on' : 'off'))
+    }
+
     return (
         <View style={{flex: 1}}>
-            <CameraView ref={cameraRef} style={{flex: 1}} facing={'front'} >
+            <CameraView ref={cameraRef} style={{flex: 1}} facing={facing} flash={flash} >
+                { facing === 'back' ?
+                <TouchableOpacity 
+                    onPress={toggleCameraFlash} 
+                    style={{
+                        position: 'absolute',
+                        right: 10,
+                        top: 10,
+                        height: 50,
+                        width: 50,
+                        borderRadius: 25, 
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        backgroundColor: 'white',
+
+                    }} 
+                >
+                    <FontAwesome name="flash" size={30} color={'#374151'} />
+                    <Text style={{fontWeight:'bold', color:'#374151' }} >{flash}</Text>
+                </TouchableOpacity>
+                :
+                null
+                }
                 <View style={{
                     position: 'absolute',
-                    bottom: 20, // Adds space from the bottom (adjust as needed)
+                    bottom: 20, 
                     left: '50%',
-                    transform: [{ translateX: -230 }], // Center the button horizontally
+                    transform: [{ translateX: -230 }],
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
@@ -56,7 +90,7 @@ export default function Camera( addPhoto ) {
                         style={{
                             height: 80,
                             width: 80,
-                            borderRadius: 40,  // Half of height and width for perfect circular button
+                            borderRadius: 40,
                             justifyContent: 'center',
                             alignItems: 'center',
                             backgroundColor: 'white',
@@ -65,6 +99,22 @@ export default function Camera( addPhoto ) {
                         }} 
                     >
                         <Text>Foto</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={toggleCameraFacing} 
+                        style={{
+                            position: 'absolute',
+                            right: 30,
+                            height: 50,
+                            width: 50,
+                            borderRadius: 25, 
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            backgroundColor: 'white',
+
+                        }} 
+                    >
+                        <FontAwesome6 name="camera-rotate" size={30} color={'#374151'} />
                     </TouchableOpacity>
                 </View>
             </CameraView>

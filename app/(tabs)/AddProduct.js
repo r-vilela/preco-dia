@@ -7,20 +7,20 @@ import useAuthStore from "../../store/authStore";
 import useCategoryStore from "../../store/categoryStore";
 import useLocalStore from "../../store/localStore";
 import { router } from "expo-router";
-import { StateContext } from "../../Context/ProductContext";
+import { StateContext } from "../../context/ProductContext";
+import useProductStore from "../../store/prodStore";
 
 export default function Page() {
     const [ cat, setCat ] = useState([])
     const [ loc, setLoc ] = useState([])
-    const [selectedLanguage, setSelectedLanguage] = useState('');
-    const [selectedLocal, setLocalCategory] = useState('')
     const [ prod, setProd ] = useContext(StateContext)
         
     const { loggedUser, name } = useAuthStore()
     const { getCategory, category, isLoadingCat } = useCategoryStore()
     const { getLocal, local, isLoadingLocal } = useLocalStore()
+    const { postProd, getProd } = useProductStore()
 
-
+    
     const handleInputNome = (text) => {
         setProd({...prod, nome:text})
     }
@@ -28,23 +28,35 @@ export default function Page() {
     const handleInputPreco = (text) => {
         setProd({...prod, preco:text})
     }
-
+    
     const handleInputImage = (text) => {
         setProd({...prod, image:text})
     }
-
+    
     const handleInputDescricao = (text) => {
         setProd({...prod, descricao:text})
     }
-
+    
     const handleInputCategory = (obj) => {
-        setProd({...prod, ...obj})
+        if(obj.id && obj.nome){
+            setProd({...prod, categoriaId:obj.id})
+        } else {
+            setProd({...prod, categoriaId:''})
+        }
     }
-
+    
     const handleInputLocal = (obj) => {
-        setProd({...prod, ...obj})
+        if(obj.id && obj.nome){
+            setProd({...prod, localId:obj.id})
+        } else {
+            setProd({...prod, localId:''})
+        }
     }
-
+    
+    const rmvImage = () => {
+        setProd({...prod, image:''})
+    }
+    
     useEffect(() => {
         if (!loggedUser) {
             router.replace('/');
@@ -52,29 +64,23 @@ export default function Page() {
             getCategory()
             getLocal()
             setProd({...prod, usuario:name})
-           }
+        }
     }, [loggedUser]);
-
+    
     useEffect(() => {
-        if (category && category.length > 0) {
-            if(!isLoadingCat){
-                setCat(category);
-            }
-        }
-        if (local && local.length > 0) {
-            if(!isLoadingLocal){
-                setLoc(local);
-            }
-        }
-    }, [category, isLoadingCat, isLoadingLocal])
+        setCat([{id:0, nome:'Select an item...'}, ...category ])
+        setLoc([{id:0, nome:'Select an item...'}, ...local])
+    }, [local, category])
 
     function addProduct() {
-        if(selectedLanguage && selectedLocal && prod.nome && prod.preco && prod.usuario){
-            console.log(prod, selectedLanguage, selectedLocal)
+        if( prod.image && prod.categoriaId && prod.localId && prod.nome && prod.preco && prod.usuario){
+            console.log(JSON.stringify(prod))
+            postProd(prod)
             
             ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+            getProd()
         } else {
-            console.log(prod, selectedLanguage, selectedLocal)
+            console.log('OPA! NAO FOI TUDO', prod.image.uri)
             ToastAndroid.show('Enter all the fields available', ToastAndroid.SHORT);
         }
     }
@@ -96,17 +102,20 @@ export default function Page() {
                 <View
                     style={styles.picker}
                 >
-                    <Picker 
+                    <Picker
                         mode="dropdown"
-                        selectedValue={selectedLocal}
-                        onValueChange={(itemvalue, itemIndex) => 
-                            handleInputLocal(itemvalue)
+                        selectedValue={loc}
+                        onValueChange={(itemValue, itemIndex) =>
+                            handleInputLocal(itemValue)
                         }
-                    >
-                        <Picker.Item label="Select one..." value="" /> 
-                        {loc.map((item) => {
-                            return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
-                        })}
+                        >
+                        { loc && loc.map ?
+                        loc.map((item) => {
+                            return <Picker.Item key={item.id} label={item.nome} value={item}/>
+                        })
+                        :
+                        <Picker.Item label="Loading" value="" /> 
+                        }
                     </Picker>
                 </View>
             </View>
@@ -133,17 +142,20 @@ export default function Page() {
                 <View
                     style={styles.picker}
                 >
-                    <Picker 
+                    <Picker
                         mode="dropdown"
-                        selectedValue={selectedLanguage}
+                        selectedValue={cat}
                         onValueChange={(itemValue, itemIndex) =>
                             handleInputCategory(itemValue)
                         }
-                    >
-                        <Picker.Item label="Select one..." value="" /> 
-                        {cat.map((item) => {
-                            return <Picker.Item key={item.id} label={item.nome} value={item.name}/>
-                        })}
+                        >
+                        { cat && cat.map ?
+                        cat.map((item) => {
+                            return <Picker.Item key={item.id} label={item.nome} value={item}/>
+                        })
+                        :
+                        <Picker.Item label="Loading" value="" /> 
+                        }
                     </Picker>
                 </View>
             </View>
@@ -160,8 +172,11 @@ export default function Page() {
             <View style={styles.input} >
                 <Text style={styles.txt} >Photos *</Text>
                 <View style={styles.CamContainer}>
-                    {prod.image && prod.image.length > 0 ? 
-                        <Image style={{height:180, width: 180}} source={{uri:prod.image}} />
+                    {prod.image.uri && prod.image.uri.length > 0 ? 
+                        <>
+                            <Image style={{height:189, width: 180}} source={{uri:prod.image.uri}} />
+                            <FontAwesome onPress={rmvImage} style={{position: 'absolute', right: 8}} size={30} name="close" color='#ef4444' />
+                        </>
                     :
                     <>
                         <FontAwesome size={150} name='image' color={'#374151'} />

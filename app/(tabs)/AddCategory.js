@@ -2,7 +2,6 @@ import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } fro
 import global from "../../assets/style/global"
 import useAuthStore from "../../store/authStore";
 import useCategoryStore from "../../store/categoryStore";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useState } from "react";
 
 export default function AddCategory() {
@@ -22,7 +21,6 @@ export default function AddCategory() {
             postCategory(category)
             ToastAndroid.show('Category added!', ToastAndroid.SHORT);
         } else {
-            console.log(category)
             ToastAndroid.show('Enter Category name!', ToastAndroid.SHORT);
         }
     }
