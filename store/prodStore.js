@@ -1,9 +1,10 @@
 import { create } from "zustand";
 
 const useProductStore = create((set) => ({
-    isLoading: true,
+    isLoading: false,
     products: [],
     errorMessage: undefined,
+    postErrorMessage: undefined,
     
     getProd: async (nome) => {
         try {
@@ -60,6 +61,7 @@ const useProductStore = create((set) => ({
                     const data = await response.json();
                     console.log('Product added:', data);
                 } else {
+                    set({postErrorMessage: response})
                     console.log(response)
                 }
             } catch (error) {

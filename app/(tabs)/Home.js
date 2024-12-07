@@ -11,7 +11,7 @@ export default function Home() {
     const [ search, setSearch ] = useState('')
     const { loggedUser } = useAuthStore();
 
-    const { getProd, products } = useProductStore()
+    const { getProd, products, isLoading } = useProductStore()
 
     useEffect(() => {
         if (!loggedUser) {
@@ -54,11 +54,15 @@ export default function Home() {
             </View>
             <ScrollView style={global.container}>
                 <View style={styles.itemContainer}>
-                    {prod && prod.length > 0 ? prod.map(item => (
+                    {isLoading ? (
+                        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Loading...</Text>
+                    ) : prod && prod.length > 0 ? (
+                        prod.map(item => (
                         <Item key={item.id} prod={item} />
-                    ))
-                    : <Text style={{fontSize: 24, fontWeight: 'bold'}}>No products available...</Text>
-                    }
+                        ))
+                    ) : (
+                        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>No products available...</Text>
+                    )}
                 </View>
             </ScrollView>
         </View>

@@ -18,7 +18,7 @@ export default function Page() {
     const { loggedUser, name } = useAuthStore()
     const { getCategory, category, isLoadingCat } = useCategoryStore()
     const { getLocal, local, isLoadingLocal } = useLocalStore()
-    const { postProd, getProd } = useProductStore()
+    const { postProd, getProd, postErrorMessage } = useProductStore()
 
     
     const handleInputNome = (text) => {
@@ -77,10 +77,24 @@ export default function Page() {
             console.log(JSON.stringify(prod))
             postProd(prod)
             
-            ToastAndroid.show('Product added!', ToastAndroid.SHORT);
-            getProd()
+            
+            if (postErrorMessage){
+                ToastAndroid.show('Error to add product! \n Try again later, if the error persists, please contact our support team', ToastAndroid.SHORT);    
+            } else {
+                ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+                getProd()
+                // setProd({
+                //     nome: "",
+                //     preco: "",
+                //     descricao: "",
+                //     image: "",
+                //     usuario: "",
+                //     categoriaId: "",
+                //     locaId: "",
+                // })
+            }
         } else {
-            console.log('OPA! NAO FOI TUDO', prod.image.uri)
+            console.log('OPA! NAO FOI TUDO', prod)
             ToastAndroid.show('Enter all the fields available', ToastAndroid.SHORT);
         }
     }
