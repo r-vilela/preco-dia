@@ -7,8 +7,8 @@ import { router } from 'expo-router';
 export default function App() {
   const [loading, setLoading] = useState()
   const [usuario, setUsuario] = useState({
-    user: "emilys",
-    pass: "emilyspass"
+    user: "",
+    pass: ""
   })
 
   const { login, errorMessage, loggedUser } = useAuthStore()
@@ -51,12 +51,23 @@ export default function App() {
     <View style={global.container}>
       <View style={styles.header}>
         <Image style={styles.logo} source={require('../assets/img/logo.png')} />
+        <Text 
+          style={{
+            color:'#ef4444', 
+            fontWeight: 'bold', 
+            fontSize: 20, 
+            position: 'absolute', 
+            top: 199,
+            right: 110
+          }}>
+            BETA
+          </Text>
         <Text style={styles.title}>LOGIN</Text>
       </View>
       <View style={styles.content}>
         <View style={styles.input} >
           <Text style={styles.txt} >User</Text>
-          <TextInput onChangeText={handleInputUsuario} placeholder='Enter your username here...' inputMode='email' keyboardType='email-address' style={global.inputfield}></TextInput>
+          <TextInput onChangeText={handleInputUsuario}  placeholder='Enter your username here...' inputMode='email' autoCapitalize="none" keyboardType='email-address' style={global.inputfield}></TextInput>
         </View>
         <View style={styles.input}>
           <Text style={styles.txt}>Password</Text>

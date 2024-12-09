@@ -5,6 +5,7 @@ import Item from "../../components/Home/Item";
 import useAuthStore from "../../store/authStore";
 import { router } from "expo-router";
 import useProductStore from "../../store/prodStore";
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function Home() {
     const [ prod, setProd ] = useState([])
@@ -47,9 +48,11 @@ export default function Home() {
     return (
         <View style={{flex: 1}}>
             <View style={styles.searchContainer}>
-                <TextInput onChangeText={handleSearch} inputMode="search" style={styles.search} placeholder="Search Product"/>
+                <TextInput onChangeText={handleSearch} inputMode="search" style={styles.search} placeholder="Search Product">
+                </TextInput>
                 <TouchableOpacity onPress={searchProd} style={styles.searchBtn} title="Search" >
-                    <Image source={require('../../assets/img/Search.png')} />
+                    <FontAwesome size={20} name='search' color={'#374151'} />
+                    {/* <Image source={require('../../assets/img/Search.png')} /> */}
                 </TouchableOpacity>
             </View>
             {isLoading ? (
