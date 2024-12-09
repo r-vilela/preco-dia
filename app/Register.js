@@ -14,19 +14,19 @@ export default function Register () {
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >E-mail *</Text>
-                <TextInput placeholder="Enter your e-mail here..." inputMode="email" style={styles.inputfield}/>
+                <TextInput placeholder="Enter your e-mail here..." inputMode="email" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Password</Text>
-                <TextInput placeholder="Enter your password here..." autoCapitalize="none" inputMode="text" secureTextEntry style={styles.inputfield}/>
+                <TextInput placeholder="Enter your password here..." autoCapitalize="none" inputMode="text" secureTextEntry style={global.inputfield}/>
             </View>
             <View style={styles.inputObs} >
                 <Text style={styles.txt} >Full Name</Text>
-                <TextInput placeholder="Enter your full name here..." inputMode="search" style={styles.inputfield}/>
+                <TextInput placeholder="Enter your full name here..." inputMode="search" style={global.inputfield}/>
             </View>
             <View style={styles.inputObs} >
                 <Text style={styles.txt} >Username</Text>
-                <TextInput placeholder="Enter your username here..." style={styles.inputfield}/>
+                <TextInput placeholder="Enter your username here..." style={global.inputfield}/>
             </View>
             <TouchableOpacity onPress={handleRegister} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Register</Text>
@@ -47,11 +47,6 @@ const styles = StyleSheet.create({
     txt: {
         color: '#111827',
         fontSize: 16
-    },
-    inputfield: {
-        borderWidth: 1.32,
-        borderColor: '#d1d5db',
-        borderRadius: 8
     },
     inputobs: {
         borderWidth: 1.32,

@@ -3,6 +3,10 @@ import Fontisto from '@expo/vector-icons/Fontisto';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 export default function Item({prod}) {
+    {prod.image && prod.image.length 
+    ? console.log(prod.image)
+    :
+    console.log('deuruim')}
 
     return (
         <TouchableOpacity key={prod.id} style={styles.itemContainer}>
@@ -10,8 +14,9 @@ export default function Item({prod}) {
                 {prod.image && prod.image.length > 0 ? 
                     <Image
                         style={styles.itemImage} 
-                        source={{uri:'https://api-produtos-6p7n.onrender.com/'+prod.image}} 
+                        source={{uri:`https://api-produtos-6p7n.onrender.com/${prod.image}`}} 
                     />
+                    
                 :
                     <FontAwesome size={160} name='image' color={'#374151'} />
                 }

@@ -8,7 +8,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 export default function Camera( addPhoto ) {
     const [facing, setFacing] = useState('back');
-    const [flash, setFlash] = useState('off');
+    const [flash, setFlash] = useState('on');
     const [ prod, setProd ] = useContext(StateContext)
     const [ image, setImage ] = useState('')
     const [permission, requestPermission] = useCameraPermissions();
@@ -29,10 +29,10 @@ export default function Camera( addPhoto ) {
         }
     }
 
-    if (!permission.granted) {
+    if (permission && !permission.granted) {
         return (
-            <View style={styles.container}>
-                <Text style={styles.message}>We need your permission to show the camera</Text>
+            <View >
+                <Text >We need your permission to show the camera</Text>
                 <Button onPress={requestPermission} title="grant permission" />
             </View>
         );
@@ -47,7 +47,12 @@ export default function Camera( addPhoto ) {
 
     return (
         <View style={{flex: 1}}>
-            <CameraView ref={cameraRef} style={{flex: 1}} facing={facing} flash={flash} >
+            <CameraView 
+                ref={cameraRef} 
+                style={{flex: 1}} 
+                facing={facing} 
+                flash={flash} 
+            >
                 { facing === 'back' ?
                 <TouchableOpacity 
                     onPress={toggleCameraFlash} 

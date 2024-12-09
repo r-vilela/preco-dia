@@ -1,10 +1,11 @@
-import { Alert, Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import global from '../assets/style/global'
 import { useEffect, useState } from 'react';
 import useAuthStore from '../store/authStore';
 import { router } from 'expo-router';
 
 export default function App() {
+  const [loading, setLoading] = useState()
   const [usuario, setUsuario] = useState({
     user: "emilys",
     pass: "emilyspass"
@@ -28,18 +29,23 @@ export default function App() {
     if(errorMessage){
       Alert.alert(errorMessage)
       
-    } else if (loggedUser){
+    } else if (loggedUser){   
+      console.log(loggedUser)   
       router.replace('Home')
     }
   }, [errorMessage, loggedUser])
 
   const logar = async () => {
+    setLoading(true)
+
     if(usuario.user && usuario.pass) {
       await login(usuario.user, usuario.pass)
       
     } else {
       ToastAndroid.show('Enter all the credentials!', ToastAndroid.TOP)
     }
+    setLoading(false)
+
   }
   return (
     <View style={global.container}>
@@ -57,7 +63,11 @@ export default function App() {
           <TextInput onChangeText={handleInputPass} placeholder='Enter your password here...' autoCapitalize="none" secureTextEntry style={global.inputfield} ></TextInput>
         </View> 
         <TouchableOpacity onPress={logar} style={global.primarytouch}>
-          <Text style={global.touchtxt}>Log In</Text>
+          {loading ? 
+            <ActivityIndicator color={'white'} />  
+          :
+            <Text style={global.touchtxt}>Log In</Text>
+          }
         </TouchableOpacity>
         <View style={{display: 'flex', flexDirection: 'row'}}>
           <Text style={{width: 130}}>Don`t have an account? </Text><TouchableOpacity onPress={handleRegister}><Text style={global.link}>Register</Text></TouchableOpacity>

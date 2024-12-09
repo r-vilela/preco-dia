@@ -29,7 +29,11 @@ export default function AddCategory() {
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >Category name</Text>
-                <TextInput onChangeText={handleCategory} placeholder="Enter a new Category..." inputMode="text" style={styles.inputfield}/>
+                <TextInput 
+                onChangeText={handleCategory} 
+                placeholder="Enter a new Category..." 
+                inputMode="text" 
+                style={global.inputfield}/>
             </View>
             <TouchableOpacity onPress={addCategory} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Category</Text>

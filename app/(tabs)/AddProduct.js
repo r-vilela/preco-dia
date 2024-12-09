@@ -38,16 +38,16 @@ export default function Page() {
     }
     
     const handleInputCategory = (obj) => {
-        if(obj.id && obj.nome){
-            setProd({...prod, categoriaId:obj.id})
+        if(obj !== 0 ){
+            setProd({...prod, categoriaId:obj})
         } else {
             setProd({...prod, categoriaId:''})
         }
     }
     
     const handleInputLocal = (obj) => {
-        if(obj.id && obj.nome){
-            setProd({...prod, localId:obj.id})
+        if(obj !== 0){
+            setProd({...prod, localId:obj})
         } else {
             setProd({...prod, localId:''})
         }
@@ -83,15 +83,15 @@ export default function Page() {
             } else {
                 ToastAndroid.show('Product added!', ToastAndroid.SHORT);
                 getProd()
-                // setProd({
-                //     nome: "",
-                //     preco: "",
-                //     descricao: "",
-                //     image: "",
-                //     usuario: "",
-                //     categoriaId: "",
-                //     locaId: "",
-                // })
+                setProd({
+                    nome: "",
+                    preco: "",
+                    descricao: "",
+                    image: "",
+                    usuario: "",
+                    categoriaId: "",
+                    locaId: "",
+                })
             }
         } else {
             console.log('OPA! NAO FOI TUDO', prod)
@@ -118,14 +118,14 @@ export default function Page() {
                 >
                     <Picker
                         mode="dropdown"
-                        selectedValue={loc}
+                        selectedValue={prod.locaId}
                         onValueChange={(itemValue, itemIndex) =>
                             handleInputLocal(itemValue)
                         }
                         >
                         { loc && loc.map ?
                         loc.map((item) => {
-                            return <Picker.Item key={item.id} label={item.nome} value={item}/>
+                            return <Picker.Item key={item.id} label={item.nome} value={item.id}/>
                         })
                         :
                         <Picker.Item label="Loading" value="" /> 
@@ -136,19 +136,21 @@ export default function Page() {
             <View style={styles.input} >
                 <Text style={styles.txt} >Product name *</Text>
                 <TextInput 
+                    value={prod.nome}
                     onChangeText={handleInputNome} 
                     placeholder="Enter the product name here..." 
                     inputMode="text" 
-                    style={styles.inputfield}
+                    style={global.inputfield}
                 />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Price *</Text>
                 <TextInput 
+                    value={prod.preco}
                     onChangeText={handleInputPreco} 
                     placeholder="Enter the product price name here..." 
                     inputMode="decimal" 
-                    style={styles.inputfield}
+                    style={global.inputfield}
                 />
             </View>
             <View style={styles.input} >
@@ -158,14 +160,14 @@ export default function Page() {
                 >
                     <Picker
                         mode="dropdown"
-                        selectedValue={cat}
+                        selectedValue={prod.categoriaId}
                         onValueChange={(itemValue, itemIndex) =>
                             handleInputCategory(itemValue)
                         }
                         >
                         { cat && cat.map ?
                         cat.map((item) => {
-                            return <Picker.Item key={item.id} label={item.nome} value={item}/>
+                            return <Picker.Item key={item.id} label={item.nome} value={item.id}/>
                         })
                         :
                         <Picker.Item label="Loading" value="" /> 
@@ -176,10 +178,11 @@ export default function Page() {
             <View style={styles.inputObs} >
                 <Text style={styles.txt} >Description *</Text>
                 <TextInput 
+                    value={prod.descricao}
                     onChangeText={handleInputDescricao} 
                     placeholder="Enter any useful observation..." 
                     multiline 
-                    style={styles.inputobs} 
+                    style={{...styles.inputobs, ...global.inputfield}} 
                     onContentSizeChange={onContentSizeChange}
                 />
             </View>
@@ -223,9 +226,7 @@ const styles = StyleSheet.create({
         fontSize: 16
     },
     inputfield: {
-        borderWidth: 1.32,
         borderColor: '#d1d5db',
-        borderRadius: 8
     },
     inputobs: {
         borderWidth: 1.32,

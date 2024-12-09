@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import global from "../../assets/style/global";
 import Item from "../../components/Home/Item";
 import useAuthStore from "../../store/authStore";
@@ -52,19 +52,23 @@ export default function Home() {
                     <Image source={require('../../assets/img/Search.png')} />
                 </TouchableOpacity>
             </View>
-            <ScrollView style={global.container}>
+            {isLoading ? (
+                <View style={{alignItems: 'center', flex: 1, justifyContent: 'center'}}>
+                    <ActivityIndicator size="large" color={'#22c55e'} />
+                </View>
+            ): (
+                <ScrollView style={global.container}>
                 <View style={styles.itemContainer}>
-                    {isLoading ? (
-                        <Text style={{ fontSize: 24, fontWeight: 'bold' }}>Loading...</Text>
-                    ) : prod && prod.length > 0 ? (
+                    {prod && prod.length > 0 ? (
                         prod.map(item => (
-                        <Item key={item.id} prod={item} />
+                            <Item key={item.id} prod={item} />
                         ))
                     ) : (
                         <Text style={{ fontSize: 24, fontWeight: 'bold' }}>No products available...</Text>
                     )}
                 </View>
             </ScrollView>
+            )}
         </View>
     );
 }
@@ -90,6 +94,8 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 20,
         flex: 12,
         fontSize: 16,
+        paddingHorizontal: 8,
+        paddingVertical: 8
     },
     searchBtn: {
         flex: 1.5,

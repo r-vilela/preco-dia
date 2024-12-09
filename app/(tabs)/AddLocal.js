@@ -73,31 +73,31 @@ export default function AddLocal () {
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >Local`s name</Text>
-                <TextInput onChangeText={handleInputNome} placeholder="Enter the local name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputNome} placeholder="Enter the local name here..." inputMode="text" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >CEP</Text>
-                <TextInput onChangeText={handleInputCEP} placeholder="Enter CEP..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputCEP} placeholder="Enter CEP..." inputMode="decimal" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Street</Text>
-                <TextInput onChangeText={handleInputLog} placeholder="Enter the street..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputLog} placeholder="Enter the street..." inputMode="text" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Nº</Text>
-                <TextInput onChangeText={handleInputNum} placeholder="Enter the place Nº..." inputMode="decimal" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputNum} placeholder="Enter the place Nº..." inputMode="decimal" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Neighborhood</Text>
-                <TextInput onChangeText={handleInputBairro} placeholder="Enter the neighborhood name..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputBairro} placeholder="Enter the neighborhood name..." inputMode="text" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >City</Text>
-                <TextInput onChangeText={handleInputCidade} placeholder="Enter the city name..." inputMode="text" style={styles.inputfield}/>
+                <TextInput onChangeText={handleInputCidade} placeholder="Enter the city name..." inputMode="text" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >State</Text>
-                <TextInput onChangeText={handleInputEstado} placeholder="Enter the state name..." style={styles.inputfield} />
+                <TextInput onChangeText={handleInputEstado} placeholder="Enter the state name..." style={global.inputfield} />
             </View>
             <TouchableOpacity onPress={addLocal} style={{...global.primarytouch, marginTop: 15}}>
                 <Text style={global.touchtxt}>Add Local</Text>

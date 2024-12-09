@@ -24,23 +24,23 @@ export default function EditPerfil() {
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Name</Text>
-                <TextInput value={name} placeholder="Enter your name here..." inputMode="text" style={styles.inputfield}/>
+                <TextInput value={name} placeholder="Enter your name here..." inputMode="text" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >E-mail</Text>
-                <TextInput value={email} placeholder="Enter your E-mail here..." inputMode="email" style={styles.inputfield}/>
+                <TextInput value={email} placeholder="Enter your E-mail here..." inputMode="email" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >CPF</Text>
-                <TextInput value="600.111.875-61" placeholder="Enter your CPF here..." inputMode="numeric" style={styles.inputfield}/>
+                <TextInput value="600.111.875-61" placeholder="Enter your CPF here..." inputMode="numeric" style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Password</Text>
-                <TextInput value="123456789" placeholder="Enter your Password here..." inputMode="text" secureTextEntry style={styles.inputfield}/>
+                <TextInput value="123456789" placeholder="Enter your Password here..." inputMode="text" secureTextEntry style={global.inputfield}/>
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Telefone</Text>
-                <TextInput value='+81 965-431-3024' placeholder="Enter your phone number here..." inputMode="tel" style={styles.inputfield}/>
+                <TextInput value='+81 965-431-3024' placeholder="Enter your phone number here..." inputMode="tel" style={global.inputfield}/>
             </View>
         </View>
     )
