@@ -53,7 +53,7 @@ export default function Camera( addPhoto ) {
                 facing={facing} 
                 flash={flash} 
             >
-                { facing === 'back' ?
+                {/* { facing === 'back' ?
                 <TouchableOpacity 
                     onPress={toggleCameraFlash} 
                     style={{
@@ -74,7 +74,7 @@ export default function Camera( addPhoto ) {
                 </TouchableOpacity>
                 :
                 null
-                }
+                } */}
                 <View style={{
                     position: 'absolute',
                     bottom: 20, 

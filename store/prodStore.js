@@ -13,7 +13,7 @@ const useProductStore = create((set) => ({
             let prodReponse;  
 
             if (nome && nome.length > 0) {
-                const url = `https://api-produtos-6p7n.onrender.com/products/${encodeURIComponent(nome)}`;
+                const url = `https://api-produtos-9jmi.onrender.com/products/${encodeURIComponent(nome)}`;
 
                 prodReponse = await fetch(url, {
                     method: 'GET',
@@ -21,7 +21,7 @@ const useProductStore = create((set) => ({
                     credentials: 'include'
                 });
             } else {
-                prodReponse = await fetch('https://api-produtos-6p7n.onrender.com/products', {
+                prodReponse = await fetch('https://api-produtos-9jmi.onrender.com/products', {
                     method: 'GET',
                     headers: { 'Content-Type': 'application/json' },
                     credentials: 'include'
@@ -46,7 +46,7 @@ const useProductStore = create((set) => ({
                     }
                   }
 
-                const url = 'https://api-produtos-6p7n.onrender.com/products';
+                const url = 'https://api-produtos-9jmi.onrender.com/products';
         
                 const response = await fetch(url, {
                     method: 'POST', 

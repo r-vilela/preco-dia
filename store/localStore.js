@@ -3,13 +3,13 @@ import { create } from "zustand";
 const useLocalStore = create((set) => ({
     isLoadingLocal: true,
     local: [],
-    errorMessage: undefined,
+    postErrorMessage: undefined,
     
     getLocal: async () => {
         try {
             console.log('Local')
             set({isLoadingLocal: true})
-            const localReponse = await fetch('https://api-produtos-6p7n.onrender.com/locations', {
+            const localReponse = await fetch('https://api-produtos-9jmi.onrender.com/locations', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
@@ -25,7 +25,7 @@ const useLocalStore = create((set) => ({
         }},
         postLocal: async (loc) => {
             try {
-                const url = 'https://api-produtos-6p7n.onrender.com/locations';
+                const url = 'https://api-produtos-9jmi.onrender.com/locations';
         
                 const response = await fetch(url, {
                     method: 'POST', 
@@ -36,9 +36,13 @@ const useLocalStore = create((set) => ({
                     body: JSON.stringify(loc), 
                 });
         
+                
                 if (response.ok) {
                     const data = await response.json();
                     console.log('Location added:', data);
+                } else {
+                    set({postErrorMessage: response})
+                    console.log(response)
                 }
             } catch (error) {
                 console.error('Error:', error);

@@ -4,12 +4,13 @@ const useCategoryStore = create((set) => ({
     isLoadingCat: true,
     category: [],
     errorMessage: undefined,
+    postErrorMessage: null,
     
     getCategory: async () => {
         try {
             console.log('Categories')
             set({isLoadingCat: true})
-            const categoryReponse = await fetch('https://api-produtos-6p7n.onrender.com/categories', {
+            const categoryReponse = await fetch('https://api-produtos-9jmi.onrender.com/categories', {
                 method: 'GET',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
@@ -25,7 +26,7 @@ const useCategoryStore = create((set) => ({
         }},
     postCategory: async (cat) => {
         try {
-            const url = 'https://api-produtos-6p7n.onrender.com/categories/add'; 
+            const url = 'https://api-produtos-9jmi.onrender.com/categories/add'; 
     
             const response = await fetch(url, {
                 method: 'POST', 
@@ -39,6 +40,9 @@ const useCategoryStore = create((set) => ({
             if (response.ok) {
                 const data = await response.json();
                 console.log('Category added:', data);
+            } else {
+                set({postErrorMessage: response})
+                console.log(response)
             }
         } catch (error) {
             console.error('Error:', error);

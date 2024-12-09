@@ -17,7 +17,7 @@ export default function AddLocal () {
     })
 
     const { loggedUser } = useAuthStore()
-    const { postLocal } = useLocalStore()
+    const { postLocal, getLocal, postErrorMessage } = useLocalStore()
 
     if(!loggedUser){
         router.replace('/')
@@ -54,16 +54,22 @@ export default function AddLocal () {
     function addLocal() {
         if(loc.nome && loc.cep && loc.logradouro && loc.numero && loc.bairro && loc.cidade && loc.estado) {
             postLocal(loc)
-            setLoc({
-                nome: '',
-                cep: '',
-                logradouro: '',
-                numero: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-            })
-            ToastAndroid.show('Local added!', ToastAndroid.SHORT);
+
+            if(postErrorMessage) {
+                ToastAndroid.show('Error to add local! \n Try again later, if the error persists, please contact our support team', ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show('Local added!', ToastAndroid.SHORT);
+                getLocal()
+                setLoc({
+                    nome: '',
+                    cep: '',
+                    logradouro: '',
+                    numero: '',
+                    bairro: '',
+                    cidade: '',
+                    estado: '',
+                })
+            }
         } else {
             ToastAndroid.show('Enter all the fields available!', ToastAndroid.SHORT);
         }
@@ -73,33 +79,77 @@ export default function AddLocal () {
         <View style={global.container}>
             <View style={styles.input} >
                 <Text style={styles.txt} >Local`s name</Text>
-                <TextInput onChangeText={handleInputNome} placeholder="Enter the local name here..." inputMode="text" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.nome}
+                    onChangeText={handleInputNome} 
+                    placeholder="Enter the local name here..." 
+                    inputMode="text" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >CEP</Text>
-                <TextInput onChangeText={handleInputCEP} placeholder="Enter CEP..." inputMode="decimal" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.cep}
+                    onChangeText={handleInputCEP} 
+                    placeholder="Enter CEP..." 
+                    inputMode="decimal" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Street</Text>
-                <TextInput onChangeText={handleInputLog} placeholder="Enter the street..." inputMode="text" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.logradouro}
+                    onChangeText={handleInputLog} 
+                    placeholder="Enter the street..." 
+                    inputMode="text" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Nº</Text>
-                <TextInput onChangeText={handleInputNum} placeholder="Enter the place Nº..." inputMode="decimal" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.numero}
+                    onChangeText={handleInputNum} 
+                    placeholder="Enter the place Nº..." 
+                    inputMode="decimal" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >Neighborhood</Text>
-                <TextInput onChangeText={handleInputBairro} placeholder="Enter the neighborhood name..." inputMode="text" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.bairro}
+                    onChangeText={handleInputBairro} 
+                    placeholder="Enter the neighborhood name..." 
+                    inputMode="text" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >City</Text>
-                <TextInput onChangeText={handleInputCidade} placeholder="Enter the city name..." inputMode="text" style={global.inputfield}/>
+                <TextInput 
+                    value={loc.cidade}
+                    onChangeText={handleInputCidade} 
+                    placeholder="Enter the city name..." 
+                    inputMode="text" 
+                    style={global.inputfield}
+                />
             </View>
             <View style={styles.input} >
                 <Text style={styles.txt} >State</Text>
-                <TextInput onChangeText={handleInputEstado} placeholder="Enter the state name..." style={global.inputfield} />
+                <TextInput 
+                    value={loc.estado}
+                    onChangeText={handleInputEstado} 
+                    placeholder="Enter the state name..." 
+                    style={global.inputfield} 
+                />
             </View>
-            <TouchableOpacity onPress={addLocal} style={{...global.primarytouch, marginTop: 15}}>
+            <TouchableOpacity 
+                onPress={addLocal} 
+                style={{...global.primarytouch, marginTop: 15}}
+            >
                 <Text style={global.touchtxt}>Add Local</Text>
             </TouchableOpacity>
         </View>

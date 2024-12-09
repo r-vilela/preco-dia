@@ -1,6 +1,5 @@
 import { StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from "react-native"
 import global from "../../assets/style/global"
-import useAuthStore from "../../store/authStore";
 import useCategoryStore from "../../store/categoryStore";
 import { useState } from "react";
 
@@ -9,8 +8,7 @@ export default function AddCategory() {
         nome: ''
     })
 
-    const { loggedUser } = useAuthStore()
-    const { postCategory } = useCategoryStore()
+    const { postCategory, getCategory, postErrorMessage } = useCategoryStore()
 
     const handleCategory = (text) => {
         setCategory({nome:text})
@@ -19,7 +17,17 @@ export default function AddCategory() {
     function addCategory() {
         if( category.nome && category.nome.length > 0){
             postCategory(category)
-            ToastAndroid.show('Category added!', ToastAndroid.SHORT);
+            
+            if(postErrorMessage) {
+                ToastAndroid.show('Error to add category! \n Try again later, if the error persists, please contact our support team', ToastAndroid.SHORT);
+            } else {
+                ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+                getCategory()
+                setCategory({
+                    nome: ''
+                })
+            }
+
         } else {
             ToastAndroid.show('Enter Category name!', ToastAndroid.SHORT);
         }
@@ -33,6 +41,7 @@ export default function AddCategory() {
                 onChangeText={handleCategory} 
                 placeholder="Enter a new Category..." 
                 inputMode="text" 
+                value={category.nome}
                 style={global.inputfield}/>
             </View>
             <TouchableOpacity onPress={addCategory} style={{...global.primarytouch, marginTop: 15}}>

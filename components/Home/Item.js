@@ -14,7 +14,7 @@ export default function Item({prod}) {
                 {prod.image && prod.image.length > 0 ? 
                     <Image
                         style={styles.itemImage} 
-                        source={{uri:`https://api-produtos-6p7n.onrender.com/${prod.image}`}} 
+                        source={{uri:`https://api-produtos-9jmi.onrender.com/${prod.image}`}} 
                     />
                     
                 :
