@@ -18,7 +18,7 @@ const useCategoryStore = create((set) => ({
             const categoryData = await categoryReponse.json()
 
             if(categoryData){
-                set({category: categoryData, isLoadingCat: false})
+                set({category: categoryData.reverse(), isLoadingCat: false})
             }
             
         } catch (error) {

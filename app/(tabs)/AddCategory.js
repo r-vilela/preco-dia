@@ -21,7 +21,7 @@ export default function AddCategory() {
             if(postErrorMessage) {
                 ToastAndroid.show('Error to add category! \n Try again later, if the error persists, please contact our support team', ToastAndroid.SHORT);
             } else {
-                ToastAndroid.show('Product added!', ToastAndroid.SHORT);
+                ToastAndroid.show('Category added!', ToastAndroid.SHORT);
                 getCategory()
                 setCategory({
                     nome: ''

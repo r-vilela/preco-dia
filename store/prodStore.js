@@ -31,7 +31,7 @@ const useProductStore = create((set) => ({
             const prodData = await prodReponse.json();
 
             if (prodData) {
-                set({products: prodData, isLoading: false});
+                set({products: prodData.reverse(), isLoading: false});
             }
             
         } catch (error) {

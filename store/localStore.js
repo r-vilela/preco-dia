@@ -17,7 +17,7 @@ const useLocalStore = create((set) => ({
             const localData = await localReponse.json()
 
             if(localData){
-                set({local: localData, isLoadingLocal: false})
+                set({local: localData.reverse(), isLoadingLocal: false})
             }
             
         } catch (error) {
